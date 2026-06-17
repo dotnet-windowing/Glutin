@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/examples/">
+    <Project Path="examples/Window/Window.csproj" />
+  </Folder>
+  <Project Path="Glutin.OpenGL/Glutin.OpenGL.csproj" />
+  <Project Path="GlGenerator/GlGenerator.csproj" />
+  <Project Path="Glutin.Winit/Glutin.Winit.csproj" />
+  <Project Path="Glutin/Glutin.csproj" />
+</Solution>
