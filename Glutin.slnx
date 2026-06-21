@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/examples/">
+    <Project Path="examples/AndroidWindow/AndroidWindow.csproj" />
     <Project Path="examples/Window/Window.csproj" />
   </Folder>
   <Project Path="Glutin.OpenGL/Glutin.OpenGL.csproj" />

@@ -59,23 +59,69 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
 
     public static Display New(RawDisplayHandle display, DisplayApiPreference preference)
     {
+        if (preference.TryGetValue(out DisplayApiPreference.Egl _))
+        {
+            return global::Glutin.Backend.Egl.Display.New(display);
+        }
+
 #if WINDOWS
         if (preference.TryGetValue(out DisplayApiPreference.Wgl wgl))
         {
             return global::Glutin.Backend.Wgl.Display.New(display, wgl.WindowHandle);
         }
 
+        if (preference.TryGetValue(out DisplayApiPreference.EglThenWgl eglThenWgl))
+        {
+            try
+            {
+                return global::Glutin.Backend.Egl.Display.New(display);
+            }
+            catch (GlutinException)
+            {
+                return global::Glutin.Backend.Wgl.Display.New(display, eglThenWgl.WindowHandle);
+            }
+        }
+
         if (preference.TryGetValue(out DisplayApiPreference.WglThenEgl wglThenEgl))
         {
-            return global::Glutin.Backend.Wgl.Display.New(display, wglThenEgl.WindowHandle);
+            try
+            {
+                return global::Glutin.Backend.Wgl.Display.New(display, wglThenEgl.WindowHandle);
+            }
+            catch (GlutinException)
+            {
+                return global::Glutin.Backend.Egl.Display.New(display);
+            }
         }
 #endif
 #if !WINDOWS
-        if (preference.TryGetValue(out DisplayApiPreference.Glx _)
-            || preference.TryGetValue(out DisplayApiPreference.GlxThenEgl _)
-            || preference.TryGetValue(out DisplayApiPreference.EglThenGlx _))
+        if (preference.TryGetValue(out DisplayApiPreference.Glx _))
         {
             return global::Glutin.Backend.Glx.Display.New(display);
+        }
+
+        if (preference.TryGetValue(out DisplayApiPreference.EglThenGlx _))
+        {
+            try
+            {
+                return global::Glutin.Backend.Egl.Display.New(display);
+            }
+            catch (GlutinException)
+            {
+                return global::Glutin.Backend.Glx.Display.New(display);
+            }
+        }
+
+        if (preference.TryGetValue(out DisplayApiPreference.GlxThenEgl _))
+        {
+            try
+            {
+                return global::Glutin.Backend.Glx.Display.New(display);
+            }
+            catch (GlutinException)
+            {
+                return global::Glutin.Backend.Egl.Display.New(display);
+            }
         }
 #endif
 
@@ -271,6 +317,26 @@ public record struct DisplayApiPreference
     public static DisplayApiPreference UseCgl()
     {
         return new DisplayApiPreference(new Cgl());
+    }
+
+    public static DisplayApiPreference PreferEglThenGlx()
+    {
+        return new DisplayApiPreference(new EglThenGlx());
+    }
+
+    public static DisplayApiPreference PreferGlxThenEgl()
+    {
+        return new DisplayApiPreference(new GlxThenEgl());
+    }
+
+    public static DisplayApiPreference PreferEglThenWgl(RawWindowHandle? windowHandle = null)
+    {
+        return new DisplayApiPreference(new EglThenWgl(windowHandle));
+    }
+
+    public static DisplayApiPreference PreferWglThenEgl(RawWindowHandle? windowHandle = null)
+    {
+        return new DisplayApiPreference(new WglThenEgl(windowHandle));
     }
 
     public bool TryGetValue(out Egl value)

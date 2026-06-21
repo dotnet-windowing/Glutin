@@ -4,7 +4,7 @@ using System;
 
 namespace Glutin.OpenGL;
 
-public unsafe sealed class GL
+public static unsafe class GL
 {
     public const uint ACTIVE_ATTRIBUTE_MAX_LENGTH = 0x8B8AU;
     public const uint ACTIVE_ATTRIBUTES = 0x8B89U;
@@ -629,259 +629,254 @@ public unsafe sealed class GL
     public const uint WAIT_FAILED = 0x911DU;
     public const int ZERO = 0;
 
-    private readonly delegate* unmanaged<uint, void> _activeTexture;
-    private readonly delegate* unmanaged<uint, uint, void> _attachShader;
-    private readonly delegate* unmanaged<uint, uint, void> _beginQuery;
-    private readonly delegate* unmanaged<uint, void> _beginTransformFeedback;
-    private readonly delegate* unmanaged<uint, uint, sbyte*, void> _bindAttribLocation;
-    private readonly delegate* unmanaged<uint, uint, void> _bindBuffer;
-    private readonly delegate* unmanaged<uint, uint, uint, void> _bindBufferBase;
-    private readonly delegate* unmanaged<uint, uint, uint, nint, nint, void> _bindBufferRange;
-    private readonly delegate* unmanaged<uint, uint, void> _bindFramebuffer;
-    private readonly delegate* unmanaged<uint, uint, void> _bindRenderbuffer;
-    private readonly delegate* unmanaged<uint, uint, void> _bindSampler;
-    private readonly delegate* unmanaged<uint, uint, void> _bindTexture;
-    private readonly delegate* unmanaged<uint, uint, void> _bindTransformFeedback;
-    private readonly delegate* unmanaged<uint, void> _bindVertexArray;
-    private readonly delegate* unmanaged<float, float, float, float, void> _blendColor;
-    private readonly delegate* unmanaged<uint, void> _blendEquation;
-    private readonly delegate* unmanaged<uint, uint, void> _blendEquationSeparate;
-    private readonly delegate* unmanaged<uint, uint, void> _blendFunc;
-    private readonly delegate* unmanaged<uint, uint, uint, uint, void> _blendFuncSeparate;
-    private readonly delegate* unmanaged<int, int, int, int, int, int, int, int, uint, uint, void> _blitFramebuffer;
-    private readonly delegate* unmanaged<uint, nint, void*, uint, void> _bufferData;
-    private readonly delegate* unmanaged<uint, nint, nint, void*, void> _bufferSubData;
-    private readonly delegate* unmanaged<uint, uint> _checkFramebufferStatus;
-    private readonly delegate* unmanaged<uint, void> _clear;
-    private readonly delegate* unmanaged<uint, int, float, int, void> _clearBufferfi;
-    private readonly delegate* unmanaged<uint, int, float*, void> _clearBufferfv;
-    private readonly delegate* unmanaged<uint, int, int*, void> _clearBufferiv;
-    private readonly delegate* unmanaged<uint, int, uint*, void> _clearBufferuiv;
-    private readonly delegate* unmanaged<float, float, float, float, void> _clearColor;
-    private readonly delegate* unmanaged<float, void> _clearDepthf;
-    private readonly delegate* unmanaged<int, void> _clearStencil;
-    private readonly delegate* unmanaged<nint, uint, ulong, uint> _clientWaitSync;
-    private readonly delegate* unmanaged<byte, byte, byte, byte, void> _colorMask;
-    private readonly delegate* unmanaged<uint, void> _compileShader;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, int, int, void*, void> _compressedTexImage2D;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, int, int, int, void*, void> _compressedTexImage3D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, uint, int, void*, void> _compressedTexSubImage2D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, int, int, uint, int, void*, void> _compressedTexSubImage3D;
-    private readonly delegate* unmanaged<uint, uint, nint, nint, nint, void> _copyBufferSubData;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, int, int, int, void> _copyTexImage2D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, int, int, void> _copyTexSubImage2D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, int, int, int, void> _copyTexSubImage3D;
-    private readonly delegate* unmanaged<uint> _createProgram;
-    private readonly delegate* unmanaged<uint, uint> _createShader;
-    private readonly delegate* unmanaged<uint, void> _cullFace;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteBuffers;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteFramebuffers;
-    private readonly delegate* unmanaged<uint, void> _deleteProgram;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteQueries;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteRenderbuffers;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteSamplers;
-    private readonly delegate* unmanaged<uint, void> _deleteShader;
-    private readonly delegate* unmanaged<nint, void> _deleteSync;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteTextures;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteTransformFeedbacks;
-    private readonly delegate* unmanaged<int, uint*, void> _deleteVertexArrays;
-    private readonly delegate* unmanaged<uint, void> _depthFunc;
-    private readonly delegate* unmanaged<byte, void> _depthMask;
-    private readonly delegate* unmanaged<float, float, void> _depthRangef;
-    private readonly delegate* unmanaged<uint, uint, void> _detachShader;
-    private readonly delegate* unmanaged<uint, void> _disable;
-    private readonly delegate* unmanaged<uint, void> _disableVertexAttribArray;
-    private readonly delegate* unmanaged<uint, int, int, void> _drawArrays;
-    private readonly delegate* unmanaged<uint, int, int, int, void> _drawArraysInstanced;
-    private readonly delegate* unmanaged<int, uint*, void> _drawBuffers;
-    private readonly delegate* unmanaged<uint, int, uint, void*, void> _drawElements;
-    private readonly delegate* unmanaged<uint, int, uint, void*, int, void> _drawElementsInstanced;
-    private readonly delegate* unmanaged<uint, uint, uint, int, uint, void*, void> _drawRangeElements;
-    private readonly delegate* unmanaged<uint, void> _enable;
-    private readonly delegate* unmanaged<uint, void> _enableVertexAttribArray;
-    private readonly delegate* unmanaged<uint, void> _endQuery;
-    private readonly delegate* unmanaged<void> _endTransformFeedback;
-    private readonly delegate* unmanaged<uint, uint, nint> _fenceSync;
-    private readonly delegate* unmanaged<void> _finish;
-    private readonly delegate* unmanaged<void> _flush;
-    private readonly delegate* unmanaged<uint, nint, nint, void> _flushMappedBufferRange;
-    private readonly delegate* unmanaged<uint, uint, uint, uint, void> _framebufferRenderbuffer;
-    private readonly delegate* unmanaged<uint, uint, uint, uint, int, void> _framebufferTexture2D;
-    private readonly delegate* unmanaged<uint, uint, uint, int, int, void> _framebufferTextureLayer;
-    private readonly delegate* unmanaged<uint, void> _frontFace;
-    private readonly delegate* unmanaged<int, uint*, void> _genBuffers;
-    private readonly delegate* unmanaged<uint, void> _generateMipmap;
-    private readonly delegate* unmanaged<int, uint*, void> _genFramebuffers;
-    private readonly delegate* unmanaged<int, uint*, void> _genQueries;
-    private readonly delegate* unmanaged<int, uint*, void> _genRenderbuffers;
-    private readonly delegate* unmanaged<int, uint*, void> _genSamplers;
-    private readonly delegate* unmanaged<int, uint*, void> _genTextures;
-    private readonly delegate* unmanaged<int, uint*, void> _genTransformFeedbacks;
-    private readonly delegate* unmanaged<int, uint*, void> _genVertexArrays;
-    private readonly delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getActiveAttrib;
-    private readonly delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getActiveUniform;
-    private readonly delegate* unmanaged<uint, uint, uint, int*, void> _getActiveUniformBlockiv;
-    private readonly delegate* unmanaged<uint, uint, int, int*, sbyte*, void> _getActiveUniformBlockName;
-    private readonly delegate* unmanaged<uint, int, uint*, uint, int*, void> _getActiveUniformsiv;
-    private readonly delegate* unmanaged<uint, int, int*, uint*, void> _getAttachedShaders;
-    private readonly delegate* unmanaged<uint, sbyte*, int> _getAttribLocation;
-    private readonly delegate* unmanaged<uint, byte*, void> _getBooleanv;
-    private readonly delegate* unmanaged<uint, uint, long*, void> _getBufferParameteri64v;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getBufferParameteriv;
-    private readonly delegate* unmanaged<uint, uint, void**, void> _getBufferPointerv;
-    private readonly delegate* unmanaged<uint> _getError;
-    private readonly delegate* unmanaged<uint, float*, void> _getFloatv;
-    private readonly delegate* unmanaged<uint, sbyte*, int> _getFragDataLocation;
-    private readonly delegate* unmanaged<uint, uint, uint, int*, void> _getFramebufferAttachmentParameteriv;
-    private readonly delegate* unmanaged<uint, uint, long*, void> _getInteger64i_v;
-    private readonly delegate* unmanaged<uint, long*, void> _getInteger64v;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getIntegeri_v;
-    private readonly delegate* unmanaged<uint, int*, void> _getIntegerv;
-    private readonly delegate* unmanaged<uint, uint, uint, int, int*, void> _getInternalformativ;
-    private readonly delegate* unmanaged<uint, int, int*, uint*, void*, void> _getProgramBinary;
-    private readonly delegate* unmanaged<uint, int, int*, sbyte*, void> _getProgramInfoLog;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getProgramiv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getQueryiv;
-    private readonly delegate* unmanaged<uint, uint, uint*, void> _getQueryObjectuiv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getRenderbufferParameteriv;
-    private readonly delegate* unmanaged<uint, uint, float*, void> _getSamplerParameterfv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getSamplerParameteriv;
-    private readonly delegate* unmanaged<uint, int, int*, sbyte*, void> _getShaderInfoLog;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getShaderiv;
-    private readonly delegate* unmanaged<uint, uint, int*, int*, void> _getShaderPrecisionFormat;
-    private readonly delegate* unmanaged<uint, int, int*, sbyte*, void> _getShaderSource;
-    private readonly delegate* unmanaged<uint, byte*> _getString;
-    private readonly delegate* unmanaged<uint, uint, byte*> _getStringi;
-    private readonly delegate* unmanaged<nint, uint, int, int*, int*, void> _getSynciv;
-    private readonly delegate* unmanaged<uint, uint, float*, void> _getTexParameterfv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getTexParameteriv;
-    private readonly delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getTransformFeedbackVarying;
-    private readonly delegate* unmanaged<uint, sbyte*, uint> _getUniformBlockIndex;
-    private readonly delegate* unmanaged<uint, int, float*, void> _getUniformfv;
-    private readonly delegate* unmanaged<uint, int, sbyte**, uint*, void> _getUniformIndices;
-    private readonly delegate* unmanaged<uint, int, int*, void> _getUniformiv;
-    private readonly delegate* unmanaged<uint, sbyte*, int> _getUniformLocation;
-    private readonly delegate* unmanaged<uint, int, uint*, void> _getUniformuiv;
-    private readonly delegate* unmanaged<uint, uint, float*, void> _getVertexAttribfv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getVertexAttribIiv;
-    private readonly delegate* unmanaged<uint, uint, uint*, void> _getVertexAttribIuiv;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _getVertexAttribiv;
-    private readonly delegate* unmanaged<uint, uint, void**, void> _getVertexAttribPointerv;
-    private readonly delegate* unmanaged<uint, uint, void> _hint;
-    private readonly delegate* unmanaged<uint, int, uint*, void> _invalidateFramebuffer;
-    private readonly delegate* unmanaged<uint, int, uint*, int, int, int, int, void> _invalidateSubFramebuffer;
-    private readonly delegate* unmanaged<uint, byte> _isBuffer;
-    private readonly delegate* unmanaged<uint, byte> _isEnabled;
-    private readonly delegate* unmanaged<uint, byte> _isFramebuffer;
-    private readonly delegate* unmanaged<uint, byte> _isProgram;
-    private readonly delegate* unmanaged<uint, byte> _isQuery;
-    private readonly delegate* unmanaged<uint, byte> _isRenderbuffer;
-    private readonly delegate* unmanaged<uint, byte> _isSampler;
-    private readonly delegate* unmanaged<uint, byte> _isShader;
-    private readonly delegate* unmanaged<nint, byte> _isSync;
-    private readonly delegate* unmanaged<uint, byte> _isTexture;
-    private readonly delegate* unmanaged<uint, byte> _isTransformFeedback;
-    private readonly delegate* unmanaged<uint, byte> _isVertexArray;
-    private readonly delegate* unmanaged<float, void> _lineWidth;
-    private readonly delegate* unmanaged<uint, void> _linkProgram;
-    private readonly delegate* unmanaged<uint, nint, nint, uint, void*> _mapBufferRange;
-    private readonly delegate* unmanaged<void> _pauseTransformFeedback;
-    private readonly delegate* unmanaged<uint, int, void> _pixelStorei;
-    private readonly delegate* unmanaged<float, float, void> _polygonOffset;
-    private readonly delegate* unmanaged<uint, uint, void*, int, void> _programBinary;
-    private readonly delegate* unmanaged<uint, uint, int, void> _programParameteri;
-    private readonly delegate* unmanaged<uint, void> _readBuffer;
-    private readonly delegate* unmanaged<int, int, int, int, uint, uint, void*, void> _readPixels;
-    private readonly delegate* unmanaged<void> _releaseShaderCompiler;
-    private readonly delegate* unmanaged<uint, uint, int, int, void> _renderbufferStorage;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, void> _renderbufferStorageMultisample;
-    private readonly delegate* unmanaged<void> _resumeTransformFeedback;
-    private readonly delegate* unmanaged<float, byte, void> _sampleCoverage;
-    private readonly delegate* unmanaged<uint, uint, float, void> _samplerParameterf;
-    private readonly delegate* unmanaged<uint, uint, float*, void> _samplerParameterfv;
-    private readonly delegate* unmanaged<uint, uint, int, void> _samplerParameteri;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _samplerParameteriv;
-    private readonly delegate* unmanaged<int, int, int, int, void> _scissor;
-    private readonly delegate* unmanaged<int, uint*, uint, void*, int, void> _shaderBinary;
-    private readonly delegate* unmanaged<uint, int, sbyte**, int*, void> _shaderSource;
-    private readonly delegate* unmanaged<uint, int, uint, void> _stencilFunc;
-    private readonly delegate* unmanaged<uint, uint, int, uint, void> _stencilFuncSeparate;
-    private readonly delegate* unmanaged<uint, void> _stencilMask;
-    private readonly delegate* unmanaged<uint, uint, void> _stencilMaskSeparate;
-    private readonly delegate* unmanaged<uint, uint, uint, void> _stencilOp;
-    private readonly delegate* unmanaged<uint, uint, uint, uint, void> _stencilOpSeparate;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, uint, uint, void*, void> _texImage2D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, int, uint, uint, void*, void> _texImage3D;
-    private readonly delegate* unmanaged<uint, uint, float, void> _texParameterf;
-    private readonly delegate* unmanaged<uint, uint, float*, void> _texParameterfv;
-    private readonly delegate* unmanaged<uint, uint, int, void> _texParameteri;
-    private readonly delegate* unmanaged<uint, uint, int*, void> _texParameteriv;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, void> _texStorage2D;
-    private readonly delegate* unmanaged<uint, int, uint, int, int, int, void> _texStorage3D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, uint, uint, void*, void> _texSubImage2D;
-    private readonly delegate* unmanaged<uint, int, int, int, int, int, int, int, uint, uint, void*, void> _texSubImage3D;
-    private readonly delegate* unmanaged<uint, int, sbyte**, uint, void> _transformFeedbackVaryings;
-    private readonly delegate* unmanaged<int, float, void> _uniform1f;
-    private readonly delegate* unmanaged<int, int, float*, void> _uniform1fv;
-    private readonly delegate* unmanaged<int, int, void> _uniform1i;
-    private readonly delegate* unmanaged<int, int, int*, void> _uniform1iv;
-    private readonly delegate* unmanaged<int, uint, void> _uniform1ui;
-    private readonly delegate* unmanaged<int, int, uint*, void> _uniform1uiv;
-    private readonly delegate* unmanaged<int, float, float, void> _uniform2f;
-    private readonly delegate* unmanaged<int, int, float*, void> _uniform2fv;
-    private readonly delegate* unmanaged<int, int, int, void> _uniform2i;
-    private readonly delegate* unmanaged<int, int, int*, void> _uniform2iv;
-    private readonly delegate* unmanaged<int, uint, uint, void> _uniform2ui;
-    private readonly delegate* unmanaged<int, int, uint*, void> _uniform2uiv;
-    private readonly delegate* unmanaged<int, float, float, float, void> _uniform3f;
-    private readonly delegate* unmanaged<int, int, float*, void> _uniform3fv;
-    private readonly delegate* unmanaged<int, int, int, int, void> _uniform3i;
-    private readonly delegate* unmanaged<int, int, int*, void> _uniform3iv;
-    private readonly delegate* unmanaged<int, uint, uint, uint, void> _uniform3ui;
-    private readonly delegate* unmanaged<int, int, uint*, void> _uniform3uiv;
-    private readonly delegate* unmanaged<int, float, float, float, float, void> _uniform4f;
-    private readonly delegate* unmanaged<int, int, float*, void> _uniform4fv;
-    private readonly delegate* unmanaged<int, int, int, int, int, void> _uniform4i;
-    private readonly delegate* unmanaged<int, int, int*, void> _uniform4iv;
-    private readonly delegate* unmanaged<int, uint, uint, uint, uint, void> _uniform4ui;
-    private readonly delegate* unmanaged<int, int, uint*, void> _uniform4uiv;
-    private readonly delegate* unmanaged<uint, uint, uint, void> _uniformBlockBinding;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2x3fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2x4fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3x2fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3x4fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4x2fv;
-    private readonly delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4x3fv;
-    private readonly delegate* unmanaged<uint, byte> _unmapBuffer;
-    private readonly delegate* unmanaged<uint, void> _useProgram;
-    private readonly delegate* unmanaged<uint, void> _validateProgram;
-    private readonly delegate* unmanaged<uint, float, void> _vertexAttrib1f;
-    private readonly delegate* unmanaged<uint, float*, void> _vertexAttrib1fv;
-    private readonly delegate* unmanaged<uint, float, float, void> _vertexAttrib2f;
-    private readonly delegate* unmanaged<uint, float*, void> _vertexAttrib2fv;
-    private readonly delegate* unmanaged<uint, float, float, float, void> _vertexAttrib3f;
-    private readonly delegate* unmanaged<uint, float*, void> _vertexAttrib3fv;
-    private readonly delegate* unmanaged<uint, float, float, float, float, void> _vertexAttrib4f;
-    private readonly delegate* unmanaged<uint, float*, void> _vertexAttrib4fv;
-    private readonly delegate* unmanaged<uint, uint, void> _vertexAttribDivisor;
-    private readonly delegate* unmanaged<uint, int, int, int, int, void> _vertexAttribI4i;
-    private readonly delegate* unmanaged<uint, int*, void> _vertexAttribI4iv;
-    private readonly delegate* unmanaged<uint, uint, uint, uint, uint, void> _vertexAttribI4ui;
-    private readonly delegate* unmanaged<uint, uint*, void> _vertexAttribI4uiv;
-    private readonly delegate* unmanaged<uint, int, uint, int, void*, void> _vertexAttribIPointer;
-    private readonly delegate* unmanaged<uint, int, uint, byte, int, void*, void> _vertexAttribPointer;
-    private readonly delegate* unmanaged<int, int, int, int, void> _viewport;
-    private readonly delegate* unmanaged<nint, uint, ulong, void> _waitSync;
+    private static delegate* unmanaged<uint, void> _activeTexture;
+    private static delegate* unmanaged<uint, uint, void> _attachShader;
+    private static delegate* unmanaged<uint, uint, void> _beginQuery;
+    private static delegate* unmanaged<uint, void> _beginTransformFeedback;
+    private static delegate* unmanaged<uint, uint, sbyte*, void> _bindAttribLocation;
+    private static delegate* unmanaged<uint, uint, void> _bindBuffer;
+    private static delegate* unmanaged<uint, uint, uint, void> _bindBufferBase;
+    private static delegate* unmanaged<uint, uint, uint, nint, nint, void> _bindBufferRange;
+    private static delegate* unmanaged<uint, uint, void> _bindFramebuffer;
+    private static delegate* unmanaged<uint, uint, void> _bindRenderbuffer;
+    private static delegate* unmanaged<uint, uint, void> _bindSampler;
+    private static delegate* unmanaged<uint, uint, void> _bindTexture;
+    private static delegate* unmanaged<uint, uint, void> _bindTransformFeedback;
+    private static delegate* unmanaged<uint, void> _bindVertexArray;
+    private static delegate* unmanaged<float, float, float, float, void> _blendColor;
+    private static delegate* unmanaged<uint, void> _blendEquation;
+    private static delegate* unmanaged<uint, uint, void> _blendEquationSeparate;
+    private static delegate* unmanaged<uint, uint, void> _blendFunc;
+    private static delegate* unmanaged<uint, uint, uint, uint, void> _blendFuncSeparate;
+    private static delegate* unmanaged<int, int, int, int, int, int, int, int, uint, uint, void> _blitFramebuffer;
+    private static delegate* unmanaged<uint, nint, void*, uint, void> _bufferData;
+    private static delegate* unmanaged<uint, nint, nint, void*, void> _bufferSubData;
+    private static delegate* unmanaged<uint, uint> _checkFramebufferStatus;
+    private static delegate* unmanaged<uint, void> _clear;
+    private static delegate* unmanaged<uint, int, float, int, void> _clearBufferfi;
+    private static delegate* unmanaged<uint, int, float*, void> _clearBufferfv;
+    private static delegate* unmanaged<uint, int, int*, void> _clearBufferiv;
+    private static delegate* unmanaged<uint, int, uint*, void> _clearBufferuiv;
+    private static delegate* unmanaged<float, float, float, float, void> _clearColor;
+    private static delegate* unmanaged<float, void> _clearDepthf;
+    private static delegate* unmanaged<int, void> _clearStencil;
+    private static delegate* unmanaged<nint, uint, ulong, uint> _clientWaitSync;
+    private static delegate* unmanaged<byte, byte, byte, byte, void> _colorMask;
+    private static delegate* unmanaged<uint, void> _compileShader;
+    private static delegate* unmanaged<uint, int, uint, int, int, int, int, void*, void> _compressedTexImage2D;
+    private static delegate* unmanaged<uint, int, uint, int, int, int, int, int, void*, void> _compressedTexImage3D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, uint, int, void*, void> _compressedTexSubImage2D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, int, int, uint, int, void*, void> _compressedTexSubImage3D;
+    private static delegate* unmanaged<uint, uint, nint, nint, nint, void> _copyBufferSubData;
+    private static delegate* unmanaged<uint, int, uint, int, int, int, int, int, void> _copyTexImage2D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, int, int, void> _copyTexSubImage2D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, int, int, int, void> _copyTexSubImage3D;
+    private static delegate* unmanaged<uint> _createProgram;
+    private static delegate* unmanaged<uint, uint> _createShader;
+    private static delegate* unmanaged<uint, void> _cullFace;
+    private static delegate* unmanaged<int, uint*, void> _deleteBuffers;
+    private static delegate* unmanaged<int, uint*, void> _deleteFramebuffers;
+    private static delegate* unmanaged<uint, void> _deleteProgram;
+    private static delegate* unmanaged<int, uint*, void> _deleteQueries;
+    private static delegate* unmanaged<int, uint*, void> _deleteRenderbuffers;
+    private static delegate* unmanaged<int, uint*, void> _deleteSamplers;
+    private static delegate* unmanaged<uint, void> _deleteShader;
+    private static delegate* unmanaged<nint, void> _deleteSync;
+    private static delegate* unmanaged<int, uint*, void> _deleteTextures;
+    private static delegate* unmanaged<int, uint*, void> _deleteTransformFeedbacks;
+    private static delegate* unmanaged<int, uint*, void> _deleteVertexArrays;
+    private static delegate* unmanaged<uint, void> _depthFunc;
+    private static delegate* unmanaged<byte, void> _depthMask;
+    private static delegate* unmanaged<float, float, void> _depthRangef;
+    private static delegate* unmanaged<uint, uint, void> _detachShader;
+    private static delegate* unmanaged<uint, void> _disable;
+    private static delegate* unmanaged<uint, void> _disableVertexAttribArray;
+    private static delegate* unmanaged<uint, int, int, void> _drawArrays;
+    private static delegate* unmanaged<uint, int, int, int, void> _drawArraysInstanced;
+    private static delegate* unmanaged<int, uint*, void> _drawBuffers;
+    private static delegate* unmanaged<uint, int, uint, void*, void> _drawElements;
+    private static delegate* unmanaged<uint, int, uint, void*, int, void> _drawElementsInstanced;
+    private static delegate* unmanaged<uint, uint, uint, int, uint, void*, void> _drawRangeElements;
+    private static delegate* unmanaged<uint, void> _enable;
+    private static delegate* unmanaged<uint, void> _enableVertexAttribArray;
+    private static delegate* unmanaged<uint, void> _endQuery;
+    private static delegate* unmanaged<void> _endTransformFeedback;
+    private static delegate* unmanaged<uint, uint, nint> _fenceSync;
+    private static delegate* unmanaged<void> _finish;
+    private static delegate* unmanaged<void> _flush;
+    private static delegate* unmanaged<uint, nint, nint, void> _flushMappedBufferRange;
+    private static delegate* unmanaged<uint, uint, uint, uint, void> _framebufferRenderbuffer;
+    private static delegate* unmanaged<uint, uint, uint, uint, int, void> _framebufferTexture2D;
+    private static delegate* unmanaged<uint, uint, uint, int, int, void> _framebufferTextureLayer;
+    private static delegate* unmanaged<uint, void> _frontFace;
+    private static delegate* unmanaged<int, uint*, void> _genBuffers;
+    private static delegate* unmanaged<uint, void> _generateMipmap;
+    private static delegate* unmanaged<int, uint*, void> _genFramebuffers;
+    private static delegate* unmanaged<int, uint*, void> _genQueries;
+    private static delegate* unmanaged<int, uint*, void> _genRenderbuffers;
+    private static delegate* unmanaged<int, uint*, void> _genSamplers;
+    private static delegate* unmanaged<int, uint*, void> _genTextures;
+    private static delegate* unmanaged<int, uint*, void> _genTransformFeedbacks;
+    private static delegate* unmanaged<int, uint*, void> _genVertexArrays;
+    private static delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getActiveAttrib;
+    private static delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getActiveUniform;
+    private static delegate* unmanaged<uint, uint, uint, int*, void> _getActiveUniformBlockiv;
+    private static delegate* unmanaged<uint, uint, int, int*, sbyte*, void> _getActiveUniformBlockName;
+    private static delegate* unmanaged<uint, int, uint*, uint, int*, void> _getActiveUniformsiv;
+    private static delegate* unmanaged<uint, int, int*, uint*, void> _getAttachedShaders;
+    private static delegate* unmanaged<uint, sbyte*, int> _getAttribLocation;
+    private static delegate* unmanaged<uint, byte*, void> _getBooleanv;
+    private static delegate* unmanaged<uint, uint, long*, void> _getBufferParameteri64v;
+    private static delegate* unmanaged<uint, uint, int*, void> _getBufferParameteriv;
+    private static delegate* unmanaged<uint, uint, void**, void> _getBufferPointerv;
+    private static delegate* unmanaged<uint> _getError;
+    private static delegate* unmanaged<uint, float*, void> _getFloatv;
+    private static delegate* unmanaged<uint, sbyte*, int> _getFragDataLocation;
+    private static delegate* unmanaged<uint, uint, uint, int*, void> _getFramebufferAttachmentParameteriv;
+    private static delegate* unmanaged<uint, uint, long*, void> _getInteger64i_v;
+    private static delegate* unmanaged<uint, long*, void> _getInteger64v;
+    private static delegate* unmanaged<uint, uint, int*, void> _getIntegeri_v;
+    private static delegate* unmanaged<uint, int*, void> _getIntegerv;
+    private static delegate* unmanaged<uint, uint, uint, int, int*, void> _getInternalformativ;
+    private static delegate* unmanaged<uint, int, int*, uint*, void*, void> _getProgramBinary;
+    private static delegate* unmanaged<uint, int, int*, sbyte*, void> _getProgramInfoLog;
+    private static delegate* unmanaged<uint, uint, int*, void> _getProgramiv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getQueryiv;
+    private static delegate* unmanaged<uint, uint, uint*, void> _getQueryObjectuiv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getRenderbufferParameteriv;
+    private static delegate* unmanaged<uint, uint, float*, void> _getSamplerParameterfv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getSamplerParameteriv;
+    private static delegate* unmanaged<uint, int, int*, sbyte*, void> _getShaderInfoLog;
+    private static delegate* unmanaged<uint, uint, int*, void> _getShaderiv;
+    private static delegate* unmanaged<uint, uint, int*, int*, void> _getShaderPrecisionFormat;
+    private static delegate* unmanaged<uint, int, int*, sbyte*, void> _getShaderSource;
+    private static delegate* unmanaged<uint, byte*> _getString;
+    private static delegate* unmanaged<uint, uint, byte*> _getStringi;
+    private static delegate* unmanaged<nint, uint, int, int*, int*, void> _getSynciv;
+    private static delegate* unmanaged<uint, uint, float*, void> _getTexParameterfv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getTexParameteriv;
+    private static delegate* unmanaged<uint, uint, int, int*, int*, uint*, sbyte*, void> _getTransformFeedbackVarying;
+    private static delegate* unmanaged<uint, sbyte*, uint> _getUniformBlockIndex;
+    private static delegate* unmanaged<uint, int, float*, void> _getUniformfv;
+    private static delegate* unmanaged<uint, int, sbyte**, uint*, void> _getUniformIndices;
+    private static delegate* unmanaged<uint, int, int*, void> _getUniformiv;
+    private static delegate* unmanaged<uint, sbyte*, int> _getUniformLocation;
+    private static delegate* unmanaged<uint, int, uint*, void> _getUniformuiv;
+    private static delegate* unmanaged<uint, uint, float*, void> _getVertexAttribfv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getVertexAttribIiv;
+    private static delegate* unmanaged<uint, uint, uint*, void> _getVertexAttribIuiv;
+    private static delegate* unmanaged<uint, uint, int*, void> _getVertexAttribiv;
+    private static delegate* unmanaged<uint, uint, void**, void> _getVertexAttribPointerv;
+    private static delegate* unmanaged<uint, uint, void> _hint;
+    private static delegate* unmanaged<uint, int, uint*, void> _invalidateFramebuffer;
+    private static delegate* unmanaged<uint, int, uint*, int, int, int, int, void> _invalidateSubFramebuffer;
+    private static delegate* unmanaged<uint, byte> _isBuffer;
+    private static delegate* unmanaged<uint, byte> _isEnabled;
+    private static delegate* unmanaged<uint, byte> _isFramebuffer;
+    private static delegate* unmanaged<uint, byte> _isProgram;
+    private static delegate* unmanaged<uint, byte> _isQuery;
+    private static delegate* unmanaged<uint, byte> _isRenderbuffer;
+    private static delegate* unmanaged<uint, byte> _isSampler;
+    private static delegate* unmanaged<uint, byte> _isShader;
+    private static delegate* unmanaged<nint, byte> _isSync;
+    private static delegate* unmanaged<uint, byte> _isTexture;
+    private static delegate* unmanaged<uint, byte> _isTransformFeedback;
+    private static delegate* unmanaged<uint, byte> _isVertexArray;
+    private static delegate* unmanaged<float, void> _lineWidth;
+    private static delegate* unmanaged<uint, void> _linkProgram;
+    private static delegate* unmanaged<uint, nint, nint, uint, void*> _mapBufferRange;
+    private static delegate* unmanaged<void> _pauseTransformFeedback;
+    private static delegate* unmanaged<uint, int, void> _pixelStorei;
+    private static delegate* unmanaged<float, float, void> _polygonOffset;
+    private static delegate* unmanaged<uint, uint, void*, int, void> _programBinary;
+    private static delegate* unmanaged<uint, uint, int, void> _programParameteri;
+    private static delegate* unmanaged<uint, void> _readBuffer;
+    private static delegate* unmanaged<int, int, int, int, uint, uint, void*, void> _readPixels;
+    private static delegate* unmanaged<void> _releaseShaderCompiler;
+    private static delegate* unmanaged<uint, uint, int, int, void> _renderbufferStorage;
+    private static delegate* unmanaged<uint, int, uint, int, int, void> _renderbufferStorageMultisample;
+    private static delegate* unmanaged<void> _resumeTransformFeedback;
+    private static delegate* unmanaged<float, byte, void> _sampleCoverage;
+    private static delegate* unmanaged<uint, uint, float, void> _samplerParameterf;
+    private static delegate* unmanaged<uint, uint, float*, void> _samplerParameterfv;
+    private static delegate* unmanaged<uint, uint, int, void> _samplerParameteri;
+    private static delegate* unmanaged<uint, uint, int*, void> _samplerParameteriv;
+    private static delegate* unmanaged<int, int, int, int, void> _scissor;
+    private static delegate* unmanaged<int, uint*, uint, void*, int, void> _shaderBinary;
+    private static delegate* unmanaged<uint, int, sbyte**, int*, void> _shaderSource;
+    private static delegate* unmanaged<uint, int, uint, void> _stencilFunc;
+    private static delegate* unmanaged<uint, uint, int, uint, void> _stencilFuncSeparate;
+    private static delegate* unmanaged<uint, void> _stencilMask;
+    private static delegate* unmanaged<uint, uint, void> _stencilMaskSeparate;
+    private static delegate* unmanaged<uint, uint, uint, void> _stencilOp;
+    private static delegate* unmanaged<uint, uint, uint, uint, void> _stencilOpSeparate;
+    private static delegate* unmanaged<uint, int, int, int, int, int, uint, uint, void*, void> _texImage2D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, int, uint, uint, void*, void> _texImage3D;
+    private static delegate* unmanaged<uint, uint, float, void> _texParameterf;
+    private static delegate* unmanaged<uint, uint, float*, void> _texParameterfv;
+    private static delegate* unmanaged<uint, uint, int, void> _texParameteri;
+    private static delegate* unmanaged<uint, uint, int*, void> _texParameteriv;
+    private static delegate* unmanaged<uint, int, uint, int, int, void> _texStorage2D;
+    private static delegate* unmanaged<uint, int, uint, int, int, int, void> _texStorage3D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, uint, uint, void*, void> _texSubImage2D;
+    private static delegate* unmanaged<uint, int, int, int, int, int, int, int, uint, uint, void*, void> _texSubImage3D;
+    private static delegate* unmanaged<uint, int, sbyte**, uint, void> _transformFeedbackVaryings;
+    private static delegate* unmanaged<int, float, void> _uniform1f;
+    private static delegate* unmanaged<int, int, float*, void> _uniform1fv;
+    private static delegate* unmanaged<int, int, void> _uniform1i;
+    private static delegate* unmanaged<int, int, int*, void> _uniform1iv;
+    private static delegate* unmanaged<int, uint, void> _uniform1ui;
+    private static delegate* unmanaged<int, int, uint*, void> _uniform1uiv;
+    private static delegate* unmanaged<int, float, float, void> _uniform2f;
+    private static delegate* unmanaged<int, int, float*, void> _uniform2fv;
+    private static delegate* unmanaged<int, int, int, void> _uniform2i;
+    private static delegate* unmanaged<int, int, int*, void> _uniform2iv;
+    private static delegate* unmanaged<int, uint, uint, void> _uniform2ui;
+    private static delegate* unmanaged<int, int, uint*, void> _uniform2uiv;
+    private static delegate* unmanaged<int, float, float, float, void> _uniform3f;
+    private static delegate* unmanaged<int, int, float*, void> _uniform3fv;
+    private static delegate* unmanaged<int, int, int, int, void> _uniform3i;
+    private static delegate* unmanaged<int, int, int*, void> _uniform3iv;
+    private static delegate* unmanaged<int, uint, uint, uint, void> _uniform3ui;
+    private static delegate* unmanaged<int, int, uint*, void> _uniform3uiv;
+    private static delegate* unmanaged<int, float, float, float, float, void> _uniform4f;
+    private static delegate* unmanaged<int, int, float*, void> _uniform4fv;
+    private static delegate* unmanaged<int, int, int, int, int, void> _uniform4i;
+    private static delegate* unmanaged<int, int, int*, void> _uniform4iv;
+    private static delegate* unmanaged<int, uint, uint, uint, uint, void> _uniform4ui;
+    private static delegate* unmanaged<int, int, uint*, void> _uniform4uiv;
+    private static delegate* unmanaged<uint, uint, uint, void> _uniformBlockBinding;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2x3fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix2x4fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3x2fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix3x4fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4x2fv;
+    private static delegate* unmanaged<int, int, byte, float*, void> _uniformMatrix4x3fv;
+    private static delegate* unmanaged<uint, byte> _unmapBuffer;
+    private static delegate* unmanaged<uint, void> _useProgram;
+    private static delegate* unmanaged<uint, void> _validateProgram;
+    private static delegate* unmanaged<uint, float, void> _vertexAttrib1f;
+    private static delegate* unmanaged<uint, float*, void> _vertexAttrib1fv;
+    private static delegate* unmanaged<uint, float, float, void> _vertexAttrib2f;
+    private static delegate* unmanaged<uint, float*, void> _vertexAttrib2fv;
+    private static delegate* unmanaged<uint, float, float, float, void> _vertexAttrib3f;
+    private static delegate* unmanaged<uint, float*, void> _vertexAttrib3fv;
+    private static delegate* unmanaged<uint, float, float, float, float, void> _vertexAttrib4f;
+    private static delegate* unmanaged<uint, float*, void> _vertexAttrib4fv;
+    private static delegate* unmanaged<uint, uint, void> _vertexAttribDivisor;
+    private static delegate* unmanaged<uint, int, int, int, int, void> _vertexAttribI4i;
+    private static delegate* unmanaged<uint, int*, void> _vertexAttribI4iv;
+    private static delegate* unmanaged<uint, uint, uint, uint, uint, void> _vertexAttribI4ui;
+    private static delegate* unmanaged<uint, uint*, void> _vertexAttribI4uiv;
+    private static delegate* unmanaged<uint, int, uint, int, void*, void> _vertexAttribIPointer;
+    private static delegate* unmanaged<uint, int, uint, byte, int, void*, void> _vertexAttribPointer;
+    private static delegate* unmanaged<int, int, int, int, void> _viewport;
+    private static delegate* unmanaged<nint, uint, ulong, void> _waitSync;
 
-    public static GL Load(Func<string, nint> load)
-    {
-        return new GL(load);
-    }
-
-    private GL(Func<string, nint> load)
+    public static void Load(Func<string, nint> load)
     {
         _activeTexture = (delegate* unmanaged<uint, void>)LoadFunction(load, "glActiveTexture");
         _attachShader = (delegate* unmanaged<uint, uint, void>)LoadFunction(load, "glAttachShader");
@@ -1142,1233 +1137,2468 @@ public unsafe sealed class GL
         return address;
     }
 
-    public void ActiveTexture(uint texture)
+    private static InvalidOperationException FunctionNotLoaded(string name)
     {
+        return new InvalidOperationException($"OpenGL function '{name}' has not been loaded. Call GL.Load first.");
+    }
+
+    public static void ActiveTexture(uint texture)
+    {
+        if (_activeTexture == null)
+        {
+            throw FunctionNotLoaded("glActiveTexture");
+        }
+
         _activeTexture(texture);
     }
 
-    public void AttachShader(uint program, uint shader)
+    public static void AttachShader(uint program, uint shader)
     {
+        if (_attachShader == null)
+        {
+            throw FunctionNotLoaded("glAttachShader");
+        }
+
         _attachShader(program, shader);
     }
 
-    public void BeginQuery(uint target, uint id)
+    public static void BeginQuery(uint target, uint id)
     {
+        if (_beginQuery == null)
+        {
+            throw FunctionNotLoaded("glBeginQuery");
+        }
+
         _beginQuery(target, id);
     }
 
-    public void BeginTransformFeedback(uint primitiveMode)
+    public static void BeginTransformFeedback(uint primitiveMode)
     {
+        if (_beginTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glBeginTransformFeedback");
+        }
+
         _beginTransformFeedback(primitiveMode);
     }
 
-    public void BindAttribLocation(uint program, uint index, sbyte* name)
+    public static void BindAttribLocation(uint program, uint index, sbyte* name)
     {
+        if (_bindAttribLocation == null)
+        {
+            throw FunctionNotLoaded("glBindAttribLocation");
+        }
+
         _bindAttribLocation(program, index, name);
     }
 
-    public void BindBuffer(uint target, uint buffer)
+    public static void BindBuffer(uint target, uint buffer)
     {
+        if (_bindBuffer == null)
+        {
+            throw FunctionNotLoaded("glBindBuffer");
+        }
+
         _bindBuffer(target, buffer);
     }
 
-    public void BindBufferBase(uint target, uint index, uint buffer)
+    public static void BindBufferBase(uint target, uint index, uint buffer)
     {
+        if (_bindBufferBase == null)
+        {
+            throw FunctionNotLoaded("glBindBufferBase");
+        }
+
         _bindBufferBase(target, index, buffer);
     }
 
-    public void BindBufferRange(uint target, uint index, uint buffer, nint offset, nint size)
+    public static void BindBufferRange(uint target, uint index, uint buffer, nint offset, nint size)
     {
+        if (_bindBufferRange == null)
+        {
+            throw FunctionNotLoaded("glBindBufferRange");
+        }
+
         _bindBufferRange(target, index, buffer, offset, size);
     }
 
-    public void BindFramebuffer(uint target, uint framebuffer)
+    public static void BindFramebuffer(uint target, uint framebuffer)
     {
+        if (_bindFramebuffer == null)
+        {
+            throw FunctionNotLoaded("glBindFramebuffer");
+        }
+
         _bindFramebuffer(target, framebuffer);
     }
 
-    public void BindRenderbuffer(uint target, uint renderbuffer)
+    public static void BindRenderbuffer(uint target, uint renderbuffer)
     {
+        if (_bindRenderbuffer == null)
+        {
+            throw FunctionNotLoaded("glBindRenderbuffer");
+        }
+
         _bindRenderbuffer(target, renderbuffer);
     }
 
-    public void BindSampler(uint unit, uint sampler)
+    public static void BindSampler(uint unit, uint sampler)
     {
+        if (_bindSampler == null)
+        {
+            throw FunctionNotLoaded("glBindSampler");
+        }
+
         _bindSampler(unit, sampler);
     }
 
-    public void BindTexture(uint target, uint texture)
+    public static void BindTexture(uint target, uint texture)
     {
+        if (_bindTexture == null)
+        {
+            throw FunctionNotLoaded("glBindTexture");
+        }
+
         _bindTexture(target, texture);
     }
 
-    public void BindTransformFeedback(uint target, uint id)
+    public static void BindTransformFeedback(uint target, uint id)
     {
+        if (_bindTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glBindTransformFeedback");
+        }
+
         _bindTransformFeedback(target, id);
     }
 
-    public void BindVertexArray(uint array)
+    public static void BindVertexArray(uint array)
     {
+        if (_bindVertexArray == null)
+        {
+            throw FunctionNotLoaded("glBindVertexArray");
+        }
+
         _bindVertexArray(array);
     }
 
-    public void BlendColor(float red, float green, float blue, float alpha)
+    public static void BlendColor(float red, float green, float blue, float alpha)
     {
+        if (_blendColor == null)
+        {
+            throw FunctionNotLoaded("glBlendColor");
+        }
+
         _blendColor(red, green, blue, alpha);
     }
 
-    public void BlendEquation(uint mode)
+    public static void BlendEquation(uint mode)
     {
+        if (_blendEquation == null)
+        {
+            throw FunctionNotLoaded("glBlendEquation");
+        }
+
         _blendEquation(mode);
     }
 
-    public void BlendEquationSeparate(uint modeRGB, uint modeAlpha)
+    public static void BlendEquationSeparate(uint modeRGB, uint modeAlpha)
     {
+        if (_blendEquationSeparate == null)
+        {
+            throw FunctionNotLoaded("glBlendEquationSeparate");
+        }
+
         _blendEquationSeparate(modeRGB, modeAlpha);
     }
 
-    public void BlendFunc(uint sfactor, uint dfactor)
+    public static void BlendFunc(uint sfactor, uint dfactor)
     {
+        if (_blendFunc == null)
+        {
+            throw FunctionNotLoaded("glBlendFunc");
+        }
+
         _blendFunc(sfactor, dfactor);
     }
 
-    public void BlendFuncSeparate(uint sfactorRGB, uint dfactorRGB, uint sfactorAlpha, uint dfactorAlpha)
+    public static void BlendFuncSeparate(uint sfactorRGB, uint dfactorRGB, uint sfactorAlpha, uint dfactorAlpha)
     {
+        if (_blendFuncSeparate == null)
+        {
+            throw FunctionNotLoaded("glBlendFuncSeparate");
+        }
+
         _blendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
     }
 
-    public void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
+    public static void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
     {
+        if (_blitFramebuffer == null)
+        {
+            throw FunctionNotLoaded("glBlitFramebuffer");
+        }
+
         _blitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
     }
 
-    public void BufferData(uint target, nint size, void* data, uint usage)
+    public static void BufferData(uint target, nint size, void* data, uint usage)
     {
+        if (_bufferData == null)
+        {
+            throw FunctionNotLoaded("glBufferData");
+        }
+
         _bufferData(target, size, data, usage);
     }
 
-    public void BufferSubData(uint target, nint offset, nint size, void* data)
+    public static void BufferSubData(uint target, nint offset, nint size, void* data)
     {
+        if (_bufferSubData == null)
+        {
+            throw FunctionNotLoaded("glBufferSubData");
+        }
+
         _bufferSubData(target, offset, size, data);
     }
 
-    public uint CheckFramebufferStatus(uint target)
+    public static uint CheckFramebufferStatus(uint target)
     {
+        if (_checkFramebufferStatus == null)
+        {
+            throw FunctionNotLoaded("glCheckFramebufferStatus");
+        }
+
         return _checkFramebufferStatus(target);
     }
 
-    public void Clear(uint mask)
+    public static void Clear(uint mask)
     {
+        if (_clear == null)
+        {
+            throw FunctionNotLoaded("glClear");
+        }
+
         _clear(mask);
     }
 
-    public void ClearBufferfi(uint buffer, int drawbuffer, float depth, int stencil)
+    public static void ClearBufferfi(uint buffer, int drawbuffer, float depth, int stencil)
     {
+        if (_clearBufferfi == null)
+        {
+            throw FunctionNotLoaded("glClearBufferfi");
+        }
+
         _clearBufferfi(buffer, drawbuffer, depth, stencil);
     }
 
-    public void ClearBufferfv(uint buffer, int drawbuffer, float* value)
+    public static void ClearBufferfv(uint buffer, int drawbuffer, float* value)
     {
+        if (_clearBufferfv == null)
+        {
+            throw FunctionNotLoaded("glClearBufferfv");
+        }
+
         _clearBufferfv(buffer, drawbuffer, value);
     }
 
-    public void ClearBufferiv(uint buffer, int drawbuffer, int* value)
+    public static void ClearBufferiv(uint buffer, int drawbuffer, int* value)
     {
+        if (_clearBufferiv == null)
+        {
+            throw FunctionNotLoaded("glClearBufferiv");
+        }
+
         _clearBufferiv(buffer, drawbuffer, value);
     }
 
-    public void ClearBufferuiv(uint buffer, int drawbuffer, uint* value)
+    public static void ClearBufferuiv(uint buffer, int drawbuffer, uint* value)
     {
+        if (_clearBufferuiv == null)
+        {
+            throw FunctionNotLoaded("glClearBufferuiv");
+        }
+
         _clearBufferuiv(buffer, drawbuffer, value);
     }
 
-    public void ClearColor(float red, float green, float blue, float alpha)
+    public static void ClearColor(float red, float green, float blue, float alpha)
     {
+        if (_clearColor == null)
+        {
+            throw FunctionNotLoaded("glClearColor");
+        }
+
         _clearColor(red, green, blue, alpha);
     }
 
-    public void ClearDepthf(float d)
+    public static void ClearDepthf(float d)
     {
+        if (_clearDepthf == null)
+        {
+            throw FunctionNotLoaded("glClearDepthf");
+        }
+
         _clearDepthf(d);
     }
 
-    public void ClearStencil(int s)
+    public static void ClearStencil(int s)
     {
+        if (_clearStencil == null)
+        {
+            throw FunctionNotLoaded("glClearStencil");
+        }
+
         _clearStencil(s);
     }
 
-    public uint ClientWaitSync(nint sync, uint flags, ulong timeout)
+    public static uint ClientWaitSync(nint sync, uint flags, ulong timeout)
     {
+        if (_clientWaitSync == null)
+        {
+            throw FunctionNotLoaded("glClientWaitSync");
+        }
+
         return _clientWaitSync(sync, flags, timeout);
     }
 
-    public void ColorMask(byte red, byte green, byte blue, byte alpha)
+    public static void ColorMask(byte red, byte green, byte blue, byte alpha)
     {
+        if (_colorMask == null)
+        {
+            throw FunctionNotLoaded("glColorMask");
+        }
+
         _colorMask(red, green, blue, alpha);
     }
 
-    public void CompileShader(uint shader)
+    public static void CompileShader(uint shader)
     {
+        if (_compileShader == null)
+        {
+            throw FunctionNotLoaded("glCompileShader");
+        }
+
         _compileShader(shader);
     }
 
-    public void CompressedTexImage2D(uint target, int level, uint internalformat, int width, int height, int border, int imageSize, void* data)
+    public static void CompressedTexImage2D(uint target, int level, uint internalformat, int width, int height, int border, int imageSize, void* data)
     {
+        if (_compressedTexImage2D == null)
+        {
+            throw FunctionNotLoaded("glCompressedTexImage2D");
+        }
+
         _compressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
     }
 
-    public void CompressedTexImage3D(uint target, int level, uint internalformat, int width, int height, int depth, int border, int imageSize, void* data)
+    public static void CompressedTexImage3D(uint target, int level, uint internalformat, int width, int height, int depth, int border, int imageSize, void* data)
     {
+        if (_compressedTexImage3D == null)
+        {
+            throw FunctionNotLoaded("glCompressedTexImage3D");
+        }
+
         _compressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
     }
 
-    public void CompressedTexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, int imageSize, void* data)
+    public static void CompressedTexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, int imageSize, void* data)
     {
+        if (_compressedTexSubImage2D == null)
+        {
+            throw FunctionNotLoaded("glCompressedTexSubImage2D");
+        }
+
         _compressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
     }
 
-    public void CompressedTexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint format, int imageSize, void* data)
+    public static void CompressedTexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint format, int imageSize, void* data)
     {
+        if (_compressedTexSubImage3D == null)
+        {
+            throw FunctionNotLoaded("glCompressedTexSubImage3D");
+        }
+
         _compressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
     }
 
-    public void CopyBufferSubData(uint readTarget, uint writeTarget, nint readOffset, nint writeOffset, nint size)
+    public static void CopyBufferSubData(uint readTarget, uint writeTarget, nint readOffset, nint writeOffset, nint size)
     {
+        if (_copyBufferSubData == null)
+        {
+            throw FunctionNotLoaded("glCopyBufferSubData");
+        }
+
         _copyBufferSubData(readTarget, writeTarget, readOffset, writeOffset, size);
     }
 
-    public void CopyTexImage2D(uint target, int level, uint internalformat, int x, int y, int width, int height, int border)
+    public static void CopyTexImage2D(uint target, int level, uint internalformat, int x, int y, int width, int height, int border)
     {
+        if (_copyTexImage2D == null)
+        {
+            throw FunctionNotLoaded("glCopyTexImage2D");
+        }
+
         _copyTexImage2D(target, level, internalformat, x, y, width, height, border);
     }
 
-    public void CopyTexSubImage2D(uint target, int level, int xoffset, int yoffset, int x, int y, int width, int height)
+    public static void CopyTexSubImage2D(uint target, int level, int xoffset, int yoffset, int x, int y, int width, int height)
     {
+        if (_copyTexSubImage2D == null)
+        {
+            throw FunctionNotLoaded("glCopyTexSubImage2D");
+        }
+
         _copyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
     }
 
-    public void CopyTexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height)
+    public static void CopyTexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height)
     {
+        if (_copyTexSubImage3D == null)
+        {
+            throw FunctionNotLoaded("glCopyTexSubImage3D");
+        }
+
         _copyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
     }
 
-    public uint CreateProgram()
+    public static uint CreateProgram()
     {
+        if (_createProgram == null)
+        {
+            throw FunctionNotLoaded("glCreateProgram");
+        }
+
         return _createProgram();
     }
 
-    public uint CreateShader(uint type)
+    public static uint CreateShader(uint type)
     {
+        if (_createShader == null)
+        {
+            throw FunctionNotLoaded("glCreateShader");
+        }
+
         return _createShader(type);
     }
 
-    public void CullFace(uint mode)
+    public static void CullFace(uint mode)
     {
+        if (_cullFace == null)
+        {
+            throw FunctionNotLoaded("glCullFace");
+        }
+
         _cullFace(mode);
     }
 
-    public void DeleteBuffers(int n, uint* buffers)
+    public static void DeleteBuffers(int n, uint* buffers)
     {
+        if (_deleteBuffers == null)
+        {
+            throw FunctionNotLoaded("glDeleteBuffers");
+        }
+
         _deleteBuffers(n, buffers);
     }
 
-    public void DeleteFramebuffers(int n, uint* framebuffers)
+    public static void DeleteFramebuffers(int n, uint* framebuffers)
     {
+        if (_deleteFramebuffers == null)
+        {
+            throw FunctionNotLoaded("glDeleteFramebuffers");
+        }
+
         _deleteFramebuffers(n, framebuffers);
     }
 
-    public void DeleteProgram(uint program)
+    public static void DeleteProgram(uint program)
     {
+        if (_deleteProgram == null)
+        {
+            throw FunctionNotLoaded("glDeleteProgram");
+        }
+
         _deleteProgram(program);
     }
 
-    public void DeleteQueries(int n, uint* ids)
+    public static void DeleteQueries(int n, uint* ids)
     {
+        if (_deleteQueries == null)
+        {
+            throw FunctionNotLoaded("glDeleteQueries");
+        }
+
         _deleteQueries(n, ids);
     }
 
-    public void DeleteRenderbuffers(int n, uint* renderbuffers)
+    public static void DeleteRenderbuffers(int n, uint* renderbuffers)
     {
+        if (_deleteRenderbuffers == null)
+        {
+            throw FunctionNotLoaded("glDeleteRenderbuffers");
+        }
+
         _deleteRenderbuffers(n, renderbuffers);
     }
 
-    public void DeleteSamplers(int count, uint* samplers)
+    public static void DeleteSamplers(int count, uint* samplers)
     {
+        if (_deleteSamplers == null)
+        {
+            throw FunctionNotLoaded("glDeleteSamplers");
+        }
+
         _deleteSamplers(count, samplers);
     }
 
-    public void DeleteShader(uint shader)
+    public static void DeleteShader(uint shader)
     {
+        if (_deleteShader == null)
+        {
+            throw FunctionNotLoaded("glDeleteShader");
+        }
+
         _deleteShader(shader);
     }
 
-    public void DeleteSync(nint sync)
+    public static void DeleteSync(nint sync)
     {
+        if (_deleteSync == null)
+        {
+            throw FunctionNotLoaded("glDeleteSync");
+        }
+
         _deleteSync(sync);
     }
 
-    public void DeleteTextures(int n, uint* textures)
+    public static void DeleteTextures(int n, uint* textures)
     {
+        if (_deleteTextures == null)
+        {
+            throw FunctionNotLoaded("glDeleteTextures");
+        }
+
         _deleteTextures(n, textures);
     }
 
-    public void DeleteTransformFeedbacks(int n, uint* ids)
+    public static void DeleteTransformFeedbacks(int n, uint* ids)
     {
+        if (_deleteTransformFeedbacks == null)
+        {
+            throw FunctionNotLoaded("glDeleteTransformFeedbacks");
+        }
+
         _deleteTransformFeedbacks(n, ids);
     }
 
-    public void DeleteVertexArrays(int n, uint* arrays)
+    public static void DeleteVertexArrays(int n, uint* arrays)
     {
+        if (_deleteVertexArrays == null)
+        {
+            throw FunctionNotLoaded("glDeleteVertexArrays");
+        }
+
         _deleteVertexArrays(n, arrays);
     }
 
-    public void DepthFunc(uint func)
+    public static void DepthFunc(uint func)
     {
+        if (_depthFunc == null)
+        {
+            throw FunctionNotLoaded("glDepthFunc");
+        }
+
         _depthFunc(func);
     }
 
-    public void DepthMask(byte flag)
+    public static void DepthMask(byte flag)
     {
+        if (_depthMask == null)
+        {
+            throw FunctionNotLoaded("glDepthMask");
+        }
+
         _depthMask(flag);
     }
 
-    public void DepthRangef(float n, float f)
+    public static void DepthRangef(float n, float f)
     {
+        if (_depthRangef == null)
+        {
+            throw FunctionNotLoaded("glDepthRangef");
+        }
+
         _depthRangef(n, f);
     }
 
-    public void DetachShader(uint program, uint shader)
+    public static void DetachShader(uint program, uint shader)
     {
+        if (_detachShader == null)
+        {
+            throw FunctionNotLoaded("glDetachShader");
+        }
+
         _detachShader(program, shader);
     }
 
-    public void Disable(uint cap)
+    public static void Disable(uint cap)
     {
+        if (_disable == null)
+        {
+            throw FunctionNotLoaded("glDisable");
+        }
+
         _disable(cap);
     }
 
-    public void DisableVertexAttribArray(uint index)
+    public static void DisableVertexAttribArray(uint index)
     {
+        if (_disableVertexAttribArray == null)
+        {
+            throw FunctionNotLoaded("glDisableVertexAttribArray");
+        }
+
         _disableVertexAttribArray(index);
     }
 
-    public void DrawArrays(uint mode, int first, int count)
+    public static void DrawArrays(uint mode, int first, int count)
     {
+        if (_drawArrays == null)
+        {
+            throw FunctionNotLoaded("glDrawArrays");
+        }
+
         _drawArrays(mode, first, count);
     }
 
-    public void DrawArraysInstanced(uint mode, int first, int count, int instancecount)
+    public static void DrawArraysInstanced(uint mode, int first, int count, int instancecount)
     {
+        if (_drawArraysInstanced == null)
+        {
+            throw FunctionNotLoaded("glDrawArraysInstanced");
+        }
+
         _drawArraysInstanced(mode, first, count, instancecount);
     }
 
-    public void DrawBuffers(int n, uint* bufs)
+    public static void DrawBuffers(int n, uint* bufs)
     {
+        if (_drawBuffers == null)
+        {
+            throw FunctionNotLoaded("glDrawBuffers");
+        }
+
         _drawBuffers(n, bufs);
     }
 
-    public void DrawElements(uint mode, int count, uint type, void* indices)
+    public static void DrawElements(uint mode, int count, uint type, void* indices)
     {
+        if (_drawElements == null)
+        {
+            throw FunctionNotLoaded("glDrawElements");
+        }
+
         _drawElements(mode, count, type, indices);
     }
 
-    public void DrawElementsInstanced(uint mode, int count, uint type, void* indices, int instancecount)
+    public static void DrawElementsInstanced(uint mode, int count, uint type, void* indices, int instancecount)
     {
+        if (_drawElementsInstanced == null)
+        {
+            throw FunctionNotLoaded("glDrawElementsInstanced");
+        }
+
         _drawElementsInstanced(mode, count, type, indices, instancecount);
     }
 
-    public void DrawRangeElements(uint mode, uint start, uint end, int count, uint type, void* indices)
+    public static void DrawRangeElements(uint mode, uint start, uint end, int count, uint type, void* indices)
     {
+        if (_drawRangeElements == null)
+        {
+            throw FunctionNotLoaded("glDrawRangeElements");
+        }
+
         _drawRangeElements(mode, start, end, count, type, indices);
     }
 
-    public void Enable(uint cap)
+    public static void Enable(uint cap)
     {
+        if (_enable == null)
+        {
+            throw FunctionNotLoaded("glEnable");
+        }
+
         _enable(cap);
     }
 
-    public void EnableVertexAttribArray(uint index)
+    public static void EnableVertexAttribArray(uint index)
     {
+        if (_enableVertexAttribArray == null)
+        {
+            throw FunctionNotLoaded("glEnableVertexAttribArray");
+        }
+
         _enableVertexAttribArray(index);
     }
 
-    public void EndQuery(uint target)
+    public static void EndQuery(uint target)
     {
+        if (_endQuery == null)
+        {
+            throw FunctionNotLoaded("glEndQuery");
+        }
+
         _endQuery(target);
     }
 
-    public void EndTransformFeedback()
+    public static void EndTransformFeedback()
     {
+        if (_endTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glEndTransformFeedback");
+        }
+
         _endTransformFeedback();
     }
 
-    public nint FenceSync(uint condition, uint flags)
+    public static nint FenceSync(uint condition, uint flags)
     {
+        if (_fenceSync == null)
+        {
+            throw FunctionNotLoaded("glFenceSync");
+        }
+
         return _fenceSync(condition, flags);
     }
 
-    public void Finish()
+    public static void Finish()
     {
+        if (_finish == null)
+        {
+            throw FunctionNotLoaded("glFinish");
+        }
+
         _finish();
     }
 
-    public void Flush()
+    public static void Flush()
     {
+        if (_flush == null)
+        {
+            throw FunctionNotLoaded("glFlush");
+        }
+
         _flush();
     }
 
-    public void FlushMappedBufferRange(uint target, nint offset, nint length)
+    public static void FlushMappedBufferRange(uint target, nint offset, nint length)
     {
+        if (_flushMappedBufferRange == null)
+        {
+            throw FunctionNotLoaded("glFlushMappedBufferRange");
+        }
+
         _flushMappedBufferRange(target, offset, length);
     }
 
-    public void FramebufferRenderbuffer(uint target, uint attachment, uint renderbuffertarget, uint renderbuffer)
+    public static void FramebufferRenderbuffer(uint target, uint attachment, uint renderbuffertarget, uint renderbuffer)
     {
+        if (_framebufferRenderbuffer == null)
+        {
+            throw FunctionNotLoaded("glFramebufferRenderbuffer");
+        }
+
         _framebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
     }
 
-    public void FramebufferTexture2D(uint target, uint attachment, uint textarget, uint texture, int level)
+    public static void FramebufferTexture2D(uint target, uint attachment, uint textarget, uint texture, int level)
     {
+        if (_framebufferTexture2D == null)
+        {
+            throw FunctionNotLoaded("glFramebufferTexture2D");
+        }
+
         _framebufferTexture2D(target, attachment, textarget, texture, level);
     }
 
-    public void FramebufferTextureLayer(uint target, uint attachment, uint texture, int level, int layer)
+    public static void FramebufferTextureLayer(uint target, uint attachment, uint texture, int level, int layer)
     {
+        if (_framebufferTextureLayer == null)
+        {
+            throw FunctionNotLoaded("glFramebufferTextureLayer");
+        }
+
         _framebufferTextureLayer(target, attachment, texture, level, layer);
     }
 
-    public void FrontFace(uint mode)
+    public static void FrontFace(uint mode)
     {
+        if (_frontFace == null)
+        {
+            throw FunctionNotLoaded("glFrontFace");
+        }
+
         _frontFace(mode);
     }
 
-    public void GenBuffers(int n, uint* buffers)
+    public static void GenBuffers(int n, uint* buffers)
     {
+        if (_genBuffers == null)
+        {
+            throw FunctionNotLoaded("glGenBuffers");
+        }
+
         _genBuffers(n, buffers);
     }
 
-    public void GenerateMipmap(uint target)
+    public static void GenerateMipmap(uint target)
     {
+        if (_generateMipmap == null)
+        {
+            throw FunctionNotLoaded("glGenerateMipmap");
+        }
+
         _generateMipmap(target);
     }
 
-    public void GenFramebuffers(int n, uint* framebuffers)
+    public static void GenFramebuffers(int n, uint* framebuffers)
     {
+        if (_genFramebuffers == null)
+        {
+            throw FunctionNotLoaded("glGenFramebuffers");
+        }
+
         _genFramebuffers(n, framebuffers);
     }
 
-    public void GenQueries(int n, uint* ids)
+    public static void GenQueries(int n, uint* ids)
     {
+        if (_genQueries == null)
+        {
+            throw FunctionNotLoaded("glGenQueries");
+        }
+
         _genQueries(n, ids);
     }
 
-    public void GenRenderbuffers(int n, uint* renderbuffers)
+    public static void GenRenderbuffers(int n, uint* renderbuffers)
     {
+        if (_genRenderbuffers == null)
+        {
+            throw FunctionNotLoaded("glGenRenderbuffers");
+        }
+
         _genRenderbuffers(n, renderbuffers);
     }
 
-    public void GenSamplers(int count, uint* samplers)
+    public static void GenSamplers(int count, uint* samplers)
     {
+        if (_genSamplers == null)
+        {
+            throw FunctionNotLoaded("glGenSamplers");
+        }
+
         _genSamplers(count, samplers);
     }
 
-    public void GenTextures(int n, uint* textures)
+    public static void GenTextures(int n, uint* textures)
     {
+        if (_genTextures == null)
+        {
+            throw FunctionNotLoaded("glGenTextures");
+        }
+
         _genTextures(n, textures);
     }
 
-    public void GenTransformFeedbacks(int n, uint* ids)
+    public static void GenTransformFeedbacks(int n, uint* ids)
     {
+        if (_genTransformFeedbacks == null)
+        {
+            throw FunctionNotLoaded("glGenTransformFeedbacks");
+        }
+
         _genTransformFeedbacks(n, ids);
     }
 
-    public void GenVertexArrays(int n, uint* arrays)
+    public static void GenVertexArrays(int n, uint* arrays)
     {
+        if (_genVertexArrays == null)
+        {
+            throw FunctionNotLoaded("glGenVertexArrays");
+        }
+
         _genVertexArrays(n, arrays);
     }
 
-    public void GetActiveAttrib(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
+    public static void GetActiveAttrib(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
     {
+        if (_getActiveAttrib == null)
+        {
+            throw FunctionNotLoaded("glGetActiveAttrib");
+        }
+
         _getActiveAttrib(program, index, bufSize, length, size, type, name);
     }
 
-    public void GetActiveUniform(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
+    public static void GetActiveUniform(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
     {
+        if (_getActiveUniform == null)
+        {
+            throw FunctionNotLoaded("glGetActiveUniform");
+        }
+
         _getActiveUniform(program, index, bufSize, length, size, type, name);
     }
 
-    public void GetActiveUniformBlockiv(uint program, uint uniformBlockIndex, uint pname, int* @params)
+    public static void GetActiveUniformBlockiv(uint program, uint uniformBlockIndex, uint pname, int* @params)
     {
+        if (_getActiveUniformBlockiv == null)
+        {
+            throw FunctionNotLoaded("glGetActiveUniformBlockiv");
+        }
+
         _getActiveUniformBlockiv(program, uniformBlockIndex, pname, @params);
     }
 
-    public void GetActiveUniformBlockName(uint program, uint uniformBlockIndex, int bufSize, int* length, sbyte* uniformBlockName)
+    public static void GetActiveUniformBlockName(uint program, uint uniformBlockIndex, int bufSize, int* length, sbyte* uniformBlockName)
     {
+        if (_getActiveUniformBlockName == null)
+        {
+            throw FunctionNotLoaded("glGetActiveUniformBlockName");
+        }
+
         _getActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName);
     }
 
-    public void GetActiveUniformsiv(uint program, int uniformCount, uint* uniformIndices, uint pname, int* @params)
+    public static void GetActiveUniformsiv(uint program, int uniformCount, uint* uniformIndices, uint pname, int* @params)
     {
+        if (_getActiveUniformsiv == null)
+        {
+            throw FunctionNotLoaded("glGetActiveUniformsiv");
+        }
+
         _getActiveUniformsiv(program, uniformCount, uniformIndices, pname, @params);
     }
 
-    public void GetAttachedShaders(uint program, int maxCount, int* count, uint* shaders)
+    public static void GetAttachedShaders(uint program, int maxCount, int* count, uint* shaders)
     {
+        if (_getAttachedShaders == null)
+        {
+            throw FunctionNotLoaded("glGetAttachedShaders");
+        }
+
         _getAttachedShaders(program, maxCount, count, shaders);
     }
 
-    public int GetAttribLocation(uint program, sbyte* name)
+    public static int GetAttribLocation(uint program, sbyte* name)
     {
+        if (_getAttribLocation == null)
+        {
+            throw FunctionNotLoaded("glGetAttribLocation");
+        }
+
         return _getAttribLocation(program, name);
     }
 
-    public void GetBooleanv(uint pname, byte* data)
+    public static void GetBooleanv(uint pname, byte* data)
     {
+        if (_getBooleanv == null)
+        {
+            throw FunctionNotLoaded("glGetBooleanv");
+        }
+
         _getBooleanv(pname, data);
     }
 
-    public void GetBufferParameteri64v(uint target, uint pname, long* @params)
+    public static void GetBufferParameteri64v(uint target, uint pname, long* @params)
     {
+        if (_getBufferParameteri64v == null)
+        {
+            throw FunctionNotLoaded("glGetBufferParameteri64v");
+        }
+
         _getBufferParameteri64v(target, pname, @params);
     }
 
-    public void GetBufferParameteriv(uint target, uint pname, int* @params)
+    public static void GetBufferParameteriv(uint target, uint pname, int* @params)
     {
+        if (_getBufferParameteriv == null)
+        {
+            throw FunctionNotLoaded("glGetBufferParameteriv");
+        }
+
         _getBufferParameteriv(target, pname, @params);
     }
 
-    public void GetBufferPointerv(uint target, uint pname, void** @params)
+    public static void GetBufferPointerv(uint target, uint pname, void** @params)
     {
+        if (_getBufferPointerv == null)
+        {
+            throw FunctionNotLoaded("glGetBufferPointerv");
+        }
+
         _getBufferPointerv(target, pname, @params);
     }
 
-    public uint GetError()
+    public static uint GetError()
     {
+        if (_getError == null)
+        {
+            throw FunctionNotLoaded("glGetError");
+        }
+
         return _getError();
     }
 
-    public void GetFloatv(uint pname, float* data)
+    public static void GetFloatv(uint pname, float* data)
     {
+        if (_getFloatv == null)
+        {
+            throw FunctionNotLoaded("glGetFloatv");
+        }
+
         _getFloatv(pname, data);
     }
 
-    public int GetFragDataLocation(uint program, sbyte* name)
+    public static int GetFragDataLocation(uint program, sbyte* name)
     {
+        if (_getFragDataLocation == null)
+        {
+            throw FunctionNotLoaded("glGetFragDataLocation");
+        }
+
         return _getFragDataLocation(program, name);
     }
 
-    public void GetFramebufferAttachmentParameteriv(uint target, uint attachment, uint pname, int* @params)
+    public static void GetFramebufferAttachmentParameteriv(uint target, uint attachment, uint pname, int* @params)
     {
+        if (_getFramebufferAttachmentParameteriv == null)
+        {
+            throw FunctionNotLoaded("glGetFramebufferAttachmentParameteriv");
+        }
+
         _getFramebufferAttachmentParameteriv(target, attachment, pname, @params);
     }
 
-    public void GetInteger64i_v(uint target, uint index, long* data)
+    public static void GetInteger64i_v(uint target, uint index, long* data)
     {
+        if (_getInteger64i_v == null)
+        {
+            throw FunctionNotLoaded("glGetInteger64i_v");
+        }
+
         _getInteger64i_v(target, index, data);
     }
 
-    public void GetInteger64v(uint pname, long* data)
+    public static void GetInteger64v(uint pname, long* data)
     {
+        if (_getInteger64v == null)
+        {
+            throw FunctionNotLoaded("glGetInteger64v");
+        }
+
         _getInteger64v(pname, data);
     }
 
-    public void GetIntegeri_v(uint target, uint index, int* data)
+    public static void GetIntegeri_v(uint target, uint index, int* data)
     {
+        if (_getIntegeri_v == null)
+        {
+            throw FunctionNotLoaded("glGetIntegeri_v");
+        }
+
         _getIntegeri_v(target, index, data);
     }
 
-    public void GetIntegerv(uint pname, int* data)
+    public static void GetIntegerv(uint pname, int* data)
     {
+        if (_getIntegerv == null)
+        {
+            throw FunctionNotLoaded("glGetIntegerv");
+        }
+
         _getIntegerv(pname, data);
     }
 
-    public void GetInternalformativ(uint target, uint internalformat, uint pname, int count, int* @params)
+    public static void GetInternalformativ(uint target, uint internalformat, uint pname, int count, int* @params)
     {
+        if (_getInternalformativ == null)
+        {
+            throw FunctionNotLoaded("glGetInternalformativ");
+        }
+
         _getInternalformativ(target, internalformat, pname, count, @params);
     }
 
-    public void GetProgramBinary(uint program, int bufSize, int* length, uint* binaryFormat, void* binary)
+    public static void GetProgramBinary(uint program, int bufSize, int* length, uint* binaryFormat, void* binary)
     {
+        if (_getProgramBinary == null)
+        {
+            throw FunctionNotLoaded("glGetProgramBinary");
+        }
+
         _getProgramBinary(program, bufSize, length, binaryFormat, binary);
     }
 
-    public void GetProgramInfoLog(uint program, int bufSize, int* length, sbyte* infoLog)
+    public static void GetProgramInfoLog(uint program, int bufSize, int* length, sbyte* infoLog)
     {
+        if (_getProgramInfoLog == null)
+        {
+            throw FunctionNotLoaded("glGetProgramInfoLog");
+        }
+
         _getProgramInfoLog(program, bufSize, length, infoLog);
     }
 
-    public void GetProgramiv(uint program, uint pname, int* @params)
+    public static void GetProgramiv(uint program, uint pname, int* @params)
     {
+        if (_getProgramiv == null)
+        {
+            throw FunctionNotLoaded("glGetProgramiv");
+        }
+
         _getProgramiv(program, pname, @params);
     }
 
-    public void GetQueryiv(uint target, uint pname, int* @params)
+    public static void GetQueryiv(uint target, uint pname, int* @params)
     {
+        if (_getQueryiv == null)
+        {
+            throw FunctionNotLoaded("glGetQueryiv");
+        }
+
         _getQueryiv(target, pname, @params);
     }
 
-    public void GetQueryObjectuiv(uint id, uint pname, uint* @params)
+    public static void GetQueryObjectuiv(uint id, uint pname, uint* @params)
     {
+        if (_getQueryObjectuiv == null)
+        {
+            throw FunctionNotLoaded("glGetQueryObjectuiv");
+        }
+
         _getQueryObjectuiv(id, pname, @params);
     }
 
-    public void GetRenderbufferParameteriv(uint target, uint pname, int* @params)
+    public static void GetRenderbufferParameteriv(uint target, uint pname, int* @params)
     {
+        if (_getRenderbufferParameteriv == null)
+        {
+            throw FunctionNotLoaded("glGetRenderbufferParameteriv");
+        }
+
         _getRenderbufferParameteriv(target, pname, @params);
     }
 
-    public void GetSamplerParameterfv(uint sampler, uint pname, float* @params)
+    public static void GetSamplerParameterfv(uint sampler, uint pname, float* @params)
     {
+        if (_getSamplerParameterfv == null)
+        {
+            throw FunctionNotLoaded("glGetSamplerParameterfv");
+        }
+
         _getSamplerParameterfv(sampler, pname, @params);
     }
 
-    public void GetSamplerParameteriv(uint sampler, uint pname, int* @params)
+    public static void GetSamplerParameteriv(uint sampler, uint pname, int* @params)
     {
+        if (_getSamplerParameteriv == null)
+        {
+            throw FunctionNotLoaded("glGetSamplerParameteriv");
+        }
+
         _getSamplerParameteriv(sampler, pname, @params);
     }
 
-    public void GetShaderInfoLog(uint shader, int bufSize, int* length, sbyte* infoLog)
+    public static void GetShaderInfoLog(uint shader, int bufSize, int* length, sbyte* infoLog)
     {
+        if (_getShaderInfoLog == null)
+        {
+            throw FunctionNotLoaded("glGetShaderInfoLog");
+        }
+
         _getShaderInfoLog(shader, bufSize, length, infoLog);
     }
 
-    public void GetShaderiv(uint shader, uint pname, int* @params)
+    public static void GetShaderiv(uint shader, uint pname, int* @params)
     {
+        if (_getShaderiv == null)
+        {
+            throw FunctionNotLoaded("glGetShaderiv");
+        }
+
         _getShaderiv(shader, pname, @params);
     }
 
-    public void GetShaderPrecisionFormat(uint shadertype, uint precisiontype, int* range, int* precision)
+    public static void GetShaderPrecisionFormat(uint shadertype, uint precisiontype, int* range, int* precision)
     {
+        if (_getShaderPrecisionFormat == null)
+        {
+            throw FunctionNotLoaded("glGetShaderPrecisionFormat");
+        }
+
         _getShaderPrecisionFormat(shadertype, precisiontype, range, precision);
     }
 
-    public void GetShaderSource(uint shader, int bufSize, int* length, sbyte* source)
+    public static void GetShaderSource(uint shader, int bufSize, int* length, sbyte* source)
     {
+        if (_getShaderSource == null)
+        {
+            throw FunctionNotLoaded("glGetShaderSource");
+        }
+
         _getShaderSource(shader, bufSize, length, source);
     }
 
-    public byte* GetString(uint name)
+    public static byte* GetString(uint name)
     {
+        if (_getString == null)
+        {
+            throw FunctionNotLoaded("glGetString");
+        }
+
         return _getString(name);
     }
 
-    public byte* GetStringi(uint name, uint index)
+    public static byte* GetStringi(uint name, uint index)
     {
+        if (_getStringi == null)
+        {
+            throw FunctionNotLoaded("glGetStringi");
+        }
+
         return _getStringi(name, index);
     }
 
-    public void GetSynciv(nint sync, uint pname, int count, int* length, int* values)
+    public static void GetSynciv(nint sync, uint pname, int count, int* length, int* values)
     {
+        if (_getSynciv == null)
+        {
+            throw FunctionNotLoaded("glGetSynciv");
+        }
+
         _getSynciv(sync, pname, count, length, values);
     }
 
-    public void GetTexParameterfv(uint target, uint pname, float* @params)
+    public static void GetTexParameterfv(uint target, uint pname, float* @params)
     {
+        if (_getTexParameterfv == null)
+        {
+            throw FunctionNotLoaded("glGetTexParameterfv");
+        }
+
         _getTexParameterfv(target, pname, @params);
     }
 
-    public void GetTexParameteriv(uint target, uint pname, int* @params)
+    public static void GetTexParameteriv(uint target, uint pname, int* @params)
     {
+        if (_getTexParameteriv == null)
+        {
+            throw FunctionNotLoaded("glGetTexParameteriv");
+        }
+
         _getTexParameteriv(target, pname, @params);
     }
 
-    public void GetTransformFeedbackVarying(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
+    public static void GetTransformFeedbackVarying(uint program, uint index, int bufSize, int* length, int* size, uint* type, sbyte* name)
     {
+        if (_getTransformFeedbackVarying == null)
+        {
+            throw FunctionNotLoaded("glGetTransformFeedbackVarying");
+        }
+
         _getTransformFeedbackVarying(program, index, bufSize, length, size, type, name);
     }
 
-    public uint GetUniformBlockIndex(uint program, sbyte* uniformBlockName)
+    public static uint GetUniformBlockIndex(uint program, sbyte* uniformBlockName)
     {
+        if (_getUniformBlockIndex == null)
+        {
+            throw FunctionNotLoaded("glGetUniformBlockIndex");
+        }
+
         return _getUniformBlockIndex(program, uniformBlockName);
     }
 
-    public void GetUniformfv(uint program, int location, float* @params)
+    public static void GetUniformfv(uint program, int location, float* @params)
     {
+        if (_getUniformfv == null)
+        {
+            throw FunctionNotLoaded("glGetUniformfv");
+        }
+
         _getUniformfv(program, location, @params);
     }
 
-    public void GetUniformIndices(uint program, int uniformCount, sbyte** uniformNames, uint* uniformIndices)
+    public static void GetUniformIndices(uint program, int uniformCount, sbyte** uniformNames, uint* uniformIndices)
     {
+        if (_getUniformIndices == null)
+        {
+            throw FunctionNotLoaded("glGetUniformIndices");
+        }
+
         _getUniformIndices(program, uniformCount, uniformNames, uniformIndices);
     }
 
-    public void GetUniformiv(uint program, int location, int* @params)
+    public static void GetUniformiv(uint program, int location, int* @params)
     {
+        if (_getUniformiv == null)
+        {
+            throw FunctionNotLoaded("glGetUniformiv");
+        }
+
         _getUniformiv(program, location, @params);
     }
 
-    public int GetUniformLocation(uint program, sbyte* name)
+    public static int GetUniformLocation(uint program, sbyte* name)
     {
+        if (_getUniformLocation == null)
+        {
+            throw FunctionNotLoaded("glGetUniformLocation");
+        }
+
         return _getUniformLocation(program, name);
     }
 
-    public void GetUniformuiv(uint program, int location, uint* @params)
+    public static void GetUniformuiv(uint program, int location, uint* @params)
     {
+        if (_getUniformuiv == null)
+        {
+            throw FunctionNotLoaded("glGetUniformuiv");
+        }
+
         _getUniformuiv(program, location, @params);
     }
 
-    public void GetVertexAttribfv(uint index, uint pname, float* @params)
+    public static void GetVertexAttribfv(uint index, uint pname, float* @params)
     {
+        if (_getVertexAttribfv == null)
+        {
+            throw FunctionNotLoaded("glGetVertexAttribfv");
+        }
+
         _getVertexAttribfv(index, pname, @params);
     }
 
-    public void GetVertexAttribIiv(uint index, uint pname, int* @params)
+    public static void GetVertexAttribIiv(uint index, uint pname, int* @params)
     {
+        if (_getVertexAttribIiv == null)
+        {
+            throw FunctionNotLoaded("glGetVertexAttribIiv");
+        }
+
         _getVertexAttribIiv(index, pname, @params);
     }
 
-    public void GetVertexAttribIuiv(uint index, uint pname, uint* @params)
+    public static void GetVertexAttribIuiv(uint index, uint pname, uint* @params)
     {
+        if (_getVertexAttribIuiv == null)
+        {
+            throw FunctionNotLoaded("glGetVertexAttribIuiv");
+        }
+
         _getVertexAttribIuiv(index, pname, @params);
     }
 
-    public void GetVertexAttribiv(uint index, uint pname, int* @params)
+    public static void GetVertexAttribiv(uint index, uint pname, int* @params)
     {
+        if (_getVertexAttribiv == null)
+        {
+            throw FunctionNotLoaded("glGetVertexAttribiv");
+        }
+
         _getVertexAttribiv(index, pname, @params);
     }
 
-    public void GetVertexAttribPointerv(uint index, uint pname, void** pointer)
+    public static void GetVertexAttribPointerv(uint index, uint pname, void** pointer)
     {
+        if (_getVertexAttribPointerv == null)
+        {
+            throw FunctionNotLoaded("glGetVertexAttribPointerv");
+        }
+
         _getVertexAttribPointerv(index, pname, pointer);
     }
 
-    public void Hint(uint target, uint mode)
+    public static void Hint(uint target, uint mode)
     {
+        if (_hint == null)
+        {
+            throw FunctionNotLoaded("glHint");
+        }
+
         _hint(target, mode);
     }
 
-    public void InvalidateFramebuffer(uint target, int numAttachments, uint* attachments)
+    public static void InvalidateFramebuffer(uint target, int numAttachments, uint* attachments)
     {
+        if (_invalidateFramebuffer == null)
+        {
+            throw FunctionNotLoaded("glInvalidateFramebuffer");
+        }
+
         _invalidateFramebuffer(target, numAttachments, attachments);
     }
 
-    public void InvalidateSubFramebuffer(uint target, int numAttachments, uint* attachments, int x, int y, int width, int height)
+    public static void InvalidateSubFramebuffer(uint target, int numAttachments, uint* attachments, int x, int y, int width, int height)
     {
+        if (_invalidateSubFramebuffer == null)
+        {
+            throw FunctionNotLoaded("glInvalidateSubFramebuffer");
+        }
+
         _invalidateSubFramebuffer(target, numAttachments, attachments, x, y, width, height);
     }
 
-    public byte IsBuffer(uint buffer)
+    public static byte IsBuffer(uint buffer)
     {
+        if (_isBuffer == null)
+        {
+            throw FunctionNotLoaded("glIsBuffer");
+        }
+
         return _isBuffer(buffer);
     }
 
-    public byte IsEnabled(uint cap)
+    public static byte IsEnabled(uint cap)
     {
+        if (_isEnabled == null)
+        {
+            throw FunctionNotLoaded("glIsEnabled");
+        }
+
         return _isEnabled(cap);
     }
 
-    public byte IsFramebuffer(uint framebuffer)
+    public static byte IsFramebuffer(uint framebuffer)
     {
+        if (_isFramebuffer == null)
+        {
+            throw FunctionNotLoaded("glIsFramebuffer");
+        }
+
         return _isFramebuffer(framebuffer);
     }
 
-    public byte IsProgram(uint program)
+    public static byte IsProgram(uint program)
     {
+        if (_isProgram == null)
+        {
+            throw FunctionNotLoaded("glIsProgram");
+        }
+
         return _isProgram(program);
     }
 
-    public byte IsQuery(uint id)
+    public static byte IsQuery(uint id)
     {
+        if (_isQuery == null)
+        {
+            throw FunctionNotLoaded("glIsQuery");
+        }
+
         return _isQuery(id);
     }
 
-    public byte IsRenderbuffer(uint renderbuffer)
+    public static byte IsRenderbuffer(uint renderbuffer)
     {
+        if (_isRenderbuffer == null)
+        {
+            throw FunctionNotLoaded("glIsRenderbuffer");
+        }
+
         return _isRenderbuffer(renderbuffer);
     }
 
-    public byte IsSampler(uint sampler)
+    public static byte IsSampler(uint sampler)
     {
+        if (_isSampler == null)
+        {
+            throw FunctionNotLoaded("glIsSampler");
+        }
+
         return _isSampler(sampler);
     }
 
-    public byte IsShader(uint shader)
+    public static byte IsShader(uint shader)
     {
+        if (_isShader == null)
+        {
+            throw FunctionNotLoaded("glIsShader");
+        }
+
         return _isShader(shader);
     }
 
-    public byte IsSync(nint sync)
+    public static byte IsSync(nint sync)
     {
+        if (_isSync == null)
+        {
+            throw FunctionNotLoaded("glIsSync");
+        }
+
         return _isSync(sync);
     }
 
-    public byte IsTexture(uint texture)
+    public static byte IsTexture(uint texture)
     {
+        if (_isTexture == null)
+        {
+            throw FunctionNotLoaded("glIsTexture");
+        }
+
         return _isTexture(texture);
     }
 
-    public byte IsTransformFeedback(uint id)
+    public static byte IsTransformFeedback(uint id)
     {
+        if (_isTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glIsTransformFeedback");
+        }
+
         return _isTransformFeedback(id);
     }
 
-    public byte IsVertexArray(uint array)
+    public static byte IsVertexArray(uint array)
     {
+        if (_isVertexArray == null)
+        {
+            throw FunctionNotLoaded("glIsVertexArray");
+        }
+
         return _isVertexArray(array);
     }
 
-    public void LineWidth(float width)
+    public static void LineWidth(float width)
     {
+        if (_lineWidth == null)
+        {
+            throw FunctionNotLoaded("glLineWidth");
+        }
+
         _lineWidth(width);
     }
 
-    public void LinkProgram(uint program)
+    public static void LinkProgram(uint program)
     {
+        if (_linkProgram == null)
+        {
+            throw FunctionNotLoaded("glLinkProgram");
+        }
+
         _linkProgram(program);
     }
 
-    public void* MapBufferRange(uint target, nint offset, nint length, uint access)
+    public static void* MapBufferRange(uint target, nint offset, nint length, uint access)
     {
+        if (_mapBufferRange == null)
+        {
+            throw FunctionNotLoaded("glMapBufferRange");
+        }
+
         return _mapBufferRange(target, offset, length, access);
     }
 
-    public void PauseTransformFeedback()
+    public static void PauseTransformFeedback()
     {
+        if (_pauseTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glPauseTransformFeedback");
+        }
+
         _pauseTransformFeedback();
     }
 
-    public void PixelStorei(uint pname, int param)
+    public static void PixelStorei(uint pname, int param)
     {
+        if (_pixelStorei == null)
+        {
+            throw FunctionNotLoaded("glPixelStorei");
+        }
+
         _pixelStorei(pname, param);
     }
 
-    public void PolygonOffset(float factor, float units)
+    public static void PolygonOffset(float factor, float units)
     {
+        if (_polygonOffset == null)
+        {
+            throw FunctionNotLoaded("glPolygonOffset");
+        }
+
         _polygonOffset(factor, units);
     }
 
-    public void ProgramBinary(uint program, uint binaryFormat, void* binary, int length)
+    public static void ProgramBinary(uint program, uint binaryFormat, void* binary, int length)
     {
+        if (_programBinary == null)
+        {
+            throw FunctionNotLoaded("glProgramBinary");
+        }
+
         _programBinary(program, binaryFormat, binary, length);
     }
 
-    public void ProgramParameteri(uint program, uint pname, int value)
+    public static void ProgramParameteri(uint program, uint pname, int value)
     {
+        if (_programParameteri == null)
+        {
+            throw FunctionNotLoaded("glProgramParameteri");
+        }
+
         _programParameteri(program, pname, value);
     }
 
-    public void ReadBuffer(uint src)
+    public static void ReadBuffer(uint src)
     {
+        if (_readBuffer == null)
+        {
+            throw FunctionNotLoaded("glReadBuffer");
+        }
+
         _readBuffer(src);
     }
 
-    public void ReadPixels(int x, int y, int width, int height, uint format, uint type, void* pixels)
+    public static void ReadPixels(int x, int y, int width, int height, uint format, uint type, void* pixels)
     {
+        if (_readPixels == null)
+        {
+            throw FunctionNotLoaded("glReadPixels");
+        }
+
         _readPixels(x, y, width, height, format, type, pixels);
     }
 
-    public void ReleaseShaderCompiler()
+    public static void ReleaseShaderCompiler()
     {
+        if (_releaseShaderCompiler == null)
+        {
+            throw FunctionNotLoaded("glReleaseShaderCompiler");
+        }
+
         _releaseShaderCompiler();
     }
 
-    public void RenderbufferStorage(uint target, uint internalformat, int width, int height)
+    public static void RenderbufferStorage(uint target, uint internalformat, int width, int height)
     {
+        if (_renderbufferStorage == null)
+        {
+            throw FunctionNotLoaded("glRenderbufferStorage");
+        }
+
         _renderbufferStorage(target, internalformat, width, height);
     }
 
-    public void RenderbufferStorageMultisample(uint target, int samples, uint internalformat, int width, int height)
+    public static void RenderbufferStorageMultisample(uint target, int samples, uint internalformat, int width, int height)
     {
+        if (_renderbufferStorageMultisample == null)
+        {
+            throw FunctionNotLoaded("glRenderbufferStorageMultisample");
+        }
+
         _renderbufferStorageMultisample(target, samples, internalformat, width, height);
     }
 
-    public void ResumeTransformFeedback()
+    public static void ResumeTransformFeedback()
     {
+        if (_resumeTransformFeedback == null)
+        {
+            throw FunctionNotLoaded("glResumeTransformFeedback");
+        }
+
         _resumeTransformFeedback();
     }
 
-    public void SampleCoverage(float value, byte invert)
+    public static void SampleCoverage(float value, byte invert)
     {
+        if (_sampleCoverage == null)
+        {
+            throw FunctionNotLoaded("glSampleCoverage");
+        }
+
         _sampleCoverage(value, invert);
     }
 
-    public void SamplerParameterf(uint sampler, uint pname, float param)
+    public static void SamplerParameterf(uint sampler, uint pname, float param)
     {
+        if (_samplerParameterf == null)
+        {
+            throw FunctionNotLoaded("glSamplerParameterf");
+        }
+
         _samplerParameterf(sampler, pname, param);
     }
 
-    public void SamplerParameterfv(uint sampler, uint pname, float* param)
+    public static void SamplerParameterfv(uint sampler, uint pname, float* param)
     {
+        if (_samplerParameterfv == null)
+        {
+            throw FunctionNotLoaded("glSamplerParameterfv");
+        }
+
         _samplerParameterfv(sampler, pname, param);
     }
 
-    public void SamplerParameteri(uint sampler, uint pname, int param)
+    public static void SamplerParameteri(uint sampler, uint pname, int param)
     {
+        if (_samplerParameteri == null)
+        {
+            throw FunctionNotLoaded("glSamplerParameteri");
+        }
+
         _samplerParameteri(sampler, pname, param);
     }
 
-    public void SamplerParameteriv(uint sampler, uint pname, int* param)
+    public static void SamplerParameteriv(uint sampler, uint pname, int* param)
     {
+        if (_samplerParameteriv == null)
+        {
+            throw FunctionNotLoaded("glSamplerParameteriv");
+        }
+
         _samplerParameteriv(sampler, pname, param);
     }
 
-    public void Scissor(int x, int y, int width, int height)
+    public static void Scissor(int x, int y, int width, int height)
     {
+        if (_scissor == null)
+        {
+            throw FunctionNotLoaded("glScissor");
+        }
+
         _scissor(x, y, width, height);
     }
 
-    public void ShaderBinary(int count, uint* shaders, uint binaryformat, void* binary, int length)
+    public static void ShaderBinary(int count, uint* shaders, uint binaryformat, void* binary, int length)
     {
+        if (_shaderBinary == null)
+        {
+            throw FunctionNotLoaded("glShaderBinary");
+        }
+
         _shaderBinary(count, shaders, binaryformat, binary, length);
     }
 
-    public void ShaderSource(uint shader, int count, sbyte** @string, int* length)
+    public static void ShaderSource(uint shader, int count, sbyte** @string, int* length)
     {
+        if (_shaderSource == null)
+        {
+            throw FunctionNotLoaded("glShaderSource");
+        }
+
         _shaderSource(shader, count, @string, length);
     }
 
-    public void StencilFunc(uint func, int @ref, uint mask)
+    public static void StencilFunc(uint func, int @ref, uint mask)
     {
+        if (_stencilFunc == null)
+        {
+            throw FunctionNotLoaded("glStencilFunc");
+        }
+
         _stencilFunc(func, @ref, mask);
     }
 
-    public void StencilFuncSeparate(uint face, uint func, int @ref, uint mask)
+    public static void StencilFuncSeparate(uint face, uint func, int @ref, uint mask)
     {
+        if (_stencilFuncSeparate == null)
+        {
+            throw FunctionNotLoaded("glStencilFuncSeparate");
+        }
+
         _stencilFuncSeparate(face, func, @ref, mask);
     }
 
-    public void StencilMask(uint mask)
+    public static void StencilMask(uint mask)
     {
+        if (_stencilMask == null)
+        {
+            throw FunctionNotLoaded("glStencilMask");
+        }
+
         _stencilMask(mask);
     }
 
-    public void StencilMaskSeparate(uint face, uint mask)
+    public static void StencilMaskSeparate(uint face, uint mask)
     {
+        if (_stencilMaskSeparate == null)
+        {
+            throw FunctionNotLoaded("glStencilMaskSeparate");
+        }
+
         _stencilMaskSeparate(face, mask);
     }
 
-    public void StencilOp(uint fail, uint zfail, uint zpass)
+    public static void StencilOp(uint fail, uint zfail, uint zpass)
     {
+        if (_stencilOp == null)
+        {
+            throw FunctionNotLoaded("glStencilOp");
+        }
+
         _stencilOp(fail, zfail, zpass);
     }
 
-    public void StencilOpSeparate(uint face, uint sfail, uint dpfail, uint dppass)
+    public static void StencilOpSeparate(uint face, uint sfail, uint dpfail, uint dppass)
     {
+        if (_stencilOpSeparate == null)
+        {
+            throw FunctionNotLoaded("glStencilOpSeparate");
+        }
+
         _stencilOpSeparate(face, sfail, dpfail, dppass);
     }
 
-    public void TexImage2D(uint target, int level, int internalformat, int width, int height, int border, uint format, uint type, void* pixels)
+    public static void TexImage2D(uint target, int level, int internalformat, int width, int height, int border, uint format, uint type, void* pixels)
     {
+        if (_texImage2D == null)
+        {
+            throw FunctionNotLoaded("glTexImage2D");
+        }
+
         _texImage2D(target, level, internalformat, width, height, border, format, type, pixels);
     }
 
-    public void TexImage3D(uint target, int level, int internalformat, int width, int height, int depth, int border, uint format, uint type, void* pixels)
+    public static void TexImage3D(uint target, int level, int internalformat, int width, int height, int depth, int border, uint format, uint type, void* pixels)
     {
+        if (_texImage3D == null)
+        {
+            throw FunctionNotLoaded("glTexImage3D");
+        }
+
         _texImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
     }
 
-    public void TexParameterf(uint target, uint pname, float param)
+    public static void TexParameterf(uint target, uint pname, float param)
     {
+        if (_texParameterf == null)
+        {
+            throw FunctionNotLoaded("glTexParameterf");
+        }
+
         _texParameterf(target, pname, param);
     }
 
-    public void TexParameterfv(uint target, uint pname, float* @params)
+    public static void TexParameterfv(uint target, uint pname, float* @params)
     {
+        if (_texParameterfv == null)
+        {
+            throw FunctionNotLoaded("glTexParameterfv");
+        }
+
         _texParameterfv(target, pname, @params);
     }
 
-    public void TexParameteri(uint target, uint pname, int param)
+    public static void TexParameteri(uint target, uint pname, int param)
     {
+        if (_texParameteri == null)
+        {
+            throw FunctionNotLoaded("glTexParameteri");
+        }
+
         _texParameteri(target, pname, param);
     }
 
-    public void TexParameteriv(uint target, uint pname, int* @params)
+    public static void TexParameteriv(uint target, uint pname, int* @params)
     {
+        if (_texParameteriv == null)
+        {
+            throw FunctionNotLoaded("glTexParameteriv");
+        }
+
         _texParameteriv(target, pname, @params);
     }
 
-    public void TexStorage2D(uint target, int levels, uint internalformat, int width, int height)
+    public static void TexStorage2D(uint target, int levels, uint internalformat, int width, int height)
     {
+        if (_texStorage2D == null)
+        {
+            throw FunctionNotLoaded("glTexStorage2D");
+        }
+
         _texStorage2D(target, levels, internalformat, width, height);
     }
 
-    public void TexStorage3D(uint target, int levels, uint internalformat, int width, int height, int depth)
+    public static void TexStorage3D(uint target, int levels, uint internalformat, int width, int height, int depth)
     {
+        if (_texStorage3D == null)
+        {
+            throw FunctionNotLoaded("glTexStorage3D");
+        }
+
         _texStorage3D(target, levels, internalformat, width, height, depth);
     }
 
-    public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, void* pixels)
+    public static void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, void* pixels)
     {
+        if (_texSubImage2D == null)
+        {
+            throw FunctionNotLoaded("glTexSubImage2D");
+        }
+
         _texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
     }
 
-    public void TexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint format, uint type, void* pixels)
+    public static void TexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint format, uint type, void* pixels)
     {
+        if (_texSubImage3D == null)
+        {
+            throw FunctionNotLoaded("glTexSubImage3D");
+        }
+
         _texSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
     }
 
-    public void TransformFeedbackVaryings(uint program, int count, sbyte** varyings, uint bufferMode)
+    public static void TransformFeedbackVaryings(uint program, int count, sbyte** varyings, uint bufferMode)
     {
+        if (_transformFeedbackVaryings == null)
+        {
+            throw FunctionNotLoaded("glTransformFeedbackVaryings");
+        }
+
         _transformFeedbackVaryings(program, count, varyings, bufferMode);
     }
 
-    public void Uniform1f(int location, float v0)
+    public static void Uniform1f(int location, float v0)
     {
+        if (_uniform1f == null)
+        {
+            throw FunctionNotLoaded("glUniform1f");
+        }
+
         _uniform1f(location, v0);
     }
 
-    public void Uniform1fv(int location, int count, float* value)
+    public static void Uniform1fv(int location, int count, float* value)
     {
+        if (_uniform1fv == null)
+        {
+            throw FunctionNotLoaded("glUniform1fv");
+        }
+
         _uniform1fv(location, count, value);
     }
 
-    public void Uniform1i(int location, int v0)
+    public static void Uniform1i(int location, int v0)
     {
+        if (_uniform1i == null)
+        {
+            throw FunctionNotLoaded("glUniform1i");
+        }
+
         _uniform1i(location, v0);
     }
 
-    public void Uniform1iv(int location, int count, int* value)
+    public static void Uniform1iv(int location, int count, int* value)
     {
+        if (_uniform1iv == null)
+        {
+            throw FunctionNotLoaded("glUniform1iv");
+        }
+
         _uniform1iv(location, count, value);
     }
 
-    public void Uniform1ui(int location, uint v0)
+    public static void Uniform1ui(int location, uint v0)
     {
+        if (_uniform1ui == null)
+        {
+            throw FunctionNotLoaded("glUniform1ui");
+        }
+
         _uniform1ui(location, v0);
     }
 
-    public void Uniform1uiv(int location, int count, uint* value)
+    public static void Uniform1uiv(int location, int count, uint* value)
     {
+        if (_uniform1uiv == null)
+        {
+            throw FunctionNotLoaded("glUniform1uiv");
+        }
+
         _uniform1uiv(location, count, value);
     }
 
-    public void Uniform2f(int location, float v0, float v1)
+    public static void Uniform2f(int location, float v0, float v1)
     {
+        if (_uniform2f == null)
+        {
+            throw FunctionNotLoaded("glUniform2f");
+        }
+
         _uniform2f(location, v0, v1);
     }
 
-    public void Uniform2fv(int location, int count, float* value)
+    public static void Uniform2fv(int location, int count, float* value)
     {
+        if (_uniform2fv == null)
+        {
+            throw FunctionNotLoaded("glUniform2fv");
+        }
+
         _uniform2fv(location, count, value);
     }
 
-    public void Uniform2i(int location, int v0, int v1)
+    public static void Uniform2i(int location, int v0, int v1)
     {
+        if (_uniform2i == null)
+        {
+            throw FunctionNotLoaded("glUniform2i");
+        }
+
         _uniform2i(location, v0, v1);
     }
 
-    public void Uniform2iv(int location, int count, int* value)
+    public static void Uniform2iv(int location, int count, int* value)
     {
+        if (_uniform2iv == null)
+        {
+            throw FunctionNotLoaded("glUniform2iv");
+        }
+
         _uniform2iv(location, count, value);
     }
 
-    public void Uniform2ui(int location, uint v0, uint v1)
+    public static void Uniform2ui(int location, uint v0, uint v1)
     {
+        if (_uniform2ui == null)
+        {
+            throw FunctionNotLoaded("glUniform2ui");
+        }
+
         _uniform2ui(location, v0, v1);
     }
 
-    public void Uniform2uiv(int location, int count, uint* value)
+    public static void Uniform2uiv(int location, int count, uint* value)
     {
+        if (_uniform2uiv == null)
+        {
+            throw FunctionNotLoaded("glUniform2uiv");
+        }
+
         _uniform2uiv(location, count, value);
     }
 
-    public void Uniform3f(int location, float v0, float v1, float v2)
+    public static void Uniform3f(int location, float v0, float v1, float v2)
     {
+        if (_uniform3f == null)
+        {
+            throw FunctionNotLoaded("glUniform3f");
+        }
+
         _uniform3f(location, v0, v1, v2);
     }
 
-    public void Uniform3fv(int location, int count, float* value)
+    public static void Uniform3fv(int location, int count, float* value)
     {
+        if (_uniform3fv == null)
+        {
+            throw FunctionNotLoaded("glUniform3fv");
+        }
+
         _uniform3fv(location, count, value);
     }
 
-    public void Uniform3i(int location, int v0, int v1, int v2)
+    public static void Uniform3i(int location, int v0, int v1, int v2)
     {
+        if (_uniform3i == null)
+        {
+            throw FunctionNotLoaded("glUniform3i");
+        }
+
         _uniform3i(location, v0, v1, v2);
     }
 
-    public void Uniform3iv(int location, int count, int* value)
+    public static void Uniform3iv(int location, int count, int* value)
     {
+        if (_uniform3iv == null)
+        {
+            throw FunctionNotLoaded("glUniform3iv");
+        }
+
         _uniform3iv(location, count, value);
     }
 
-    public void Uniform3ui(int location, uint v0, uint v1, uint v2)
+    public static void Uniform3ui(int location, uint v0, uint v1, uint v2)
     {
+        if (_uniform3ui == null)
+        {
+            throw FunctionNotLoaded("glUniform3ui");
+        }
+
         _uniform3ui(location, v0, v1, v2);
     }
 
-    public void Uniform3uiv(int location, int count, uint* value)
+    public static void Uniform3uiv(int location, int count, uint* value)
     {
+        if (_uniform3uiv == null)
+        {
+            throw FunctionNotLoaded("glUniform3uiv");
+        }
+
         _uniform3uiv(location, count, value);
     }
 
-    public void Uniform4f(int location, float v0, float v1, float v2, float v3)
+    public static void Uniform4f(int location, float v0, float v1, float v2, float v3)
     {
+        if (_uniform4f == null)
+        {
+            throw FunctionNotLoaded("glUniform4f");
+        }
+
         _uniform4f(location, v0, v1, v2, v3);
     }
 
-    public void Uniform4fv(int location, int count, float* value)
+    public static void Uniform4fv(int location, int count, float* value)
     {
+        if (_uniform4fv == null)
+        {
+            throw FunctionNotLoaded("glUniform4fv");
+        }
+
         _uniform4fv(location, count, value);
     }
 
-    public void Uniform4i(int location, int v0, int v1, int v2, int v3)
+    public static void Uniform4i(int location, int v0, int v1, int v2, int v3)
     {
+        if (_uniform4i == null)
+        {
+            throw FunctionNotLoaded("glUniform4i");
+        }
+
         _uniform4i(location, v0, v1, v2, v3);
     }
 
-    public void Uniform4iv(int location, int count, int* value)
+    public static void Uniform4iv(int location, int count, int* value)
     {
+        if (_uniform4iv == null)
+        {
+            throw FunctionNotLoaded("glUniform4iv");
+        }
+
         _uniform4iv(location, count, value);
     }
 
-    public void Uniform4ui(int location, uint v0, uint v1, uint v2, uint v3)
+    public static void Uniform4ui(int location, uint v0, uint v1, uint v2, uint v3)
     {
+        if (_uniform4ui == null)
+        {
+            throw FunctionNotLoaded("glUniform4ui");
+        }
+
         _uniform4ui(location, v0, v1, v2, v3);
     }
 
-    public void Uniform4uiv(int location, int count, uint* value)
+    public static void Uniform4uiv(int location, int count, uint* value)
     {
+        if (_uniform4uiv == null)
+        {
+            throw FunctionNotLoaded("glUniform4uiv");
+        }
+
         _uniform4uiv(location, count, value);
     }
 
-    public void UniformBlockBinding(uint program, uint uniformBlockIndex, uint uniformBlockBinding)
+    public static void UniformBlockBinding(uint program, uint uniformBlockIndex, uint uniformBlockBinding)
     {
+        if (_uniformBlockBinding == null)
+        {
+            throw FunctionNotLoaded("glUniformBlockBinding");
+        }
+
         _uniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding);
     }
 
-    public void UniformMatrix2fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix2fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix2fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix2fv");
+        }
+
         _uniformMatrix2fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix2x3fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix2x3fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix2x3fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix2x3fv");
+        }
+
         _uniformMatrix2x3fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix2x4fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix2x4fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix2x4fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix2x4fv");
+        }
+
         _uniformMatrix2x4fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix3fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix3fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix3fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix3fv");
+        }
+
         _uniformMatrix3fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix3x2fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix3x2fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix3x2fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix3x2fv");
+        }
+
         _uniformMatrix3x2fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix3x4fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix3x4fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix3x4fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix3x4fv");
+        }
+
         _uniformMatrix3x4fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix4fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix4fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix4fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix4fv");
+        }
+
         _uniformMatrix4fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix4x2fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix4x2fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix4x2fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix4x2fv");
+        }
+
         _uniformMatrix4x2fv(location, count, transpose, value);
     }
 
-    public void UniformMatrix4x3fv(int location, int count, byte transpose, float* value)
+    public static void UniformMatrix4x3fv(int location, int count, byte transpose, float* value)
     {
+        if (_uniformMatrix4x3fv == null)
+        {
+            throw FunctionNotLoaded("glUniformMatrix4x3fv");
+        }
+
         _uniformMatrix4x3fv(location, count, transpose, value);
     }
 
-    public byte UnmapBuffer(uint target)
+    public static byte UnmapBuffer(uint target)
     {
+        if (_unmapBuffer == null)
+        {
+            throw FunctionNotLoaded("glUnmapBuffer");
+        }
+
         return _unmapBuffer(target);
     }
 
-    public void UseProgram(uint program)
+    public static void UseProgram(uint program)
     {
+        if (_useProgram == null)
+        {
+            throw FunctionNotLoaded("glUseProgram");
+        }
+
         _useProgram(program);
     }
 
-    public void ValidateProgram(uint program)
+    public static void ValidateProgram(uint program)
     {
+        if (_validateProgram == null)
+        {
+            throw FunctionNotLoaded("glValidateProgram");
+        }
+
         _validateProgram(program);
     }
 
-    public void VertexAttrib1f(uint index, float x)
+    public static void VertexAttrib1f(uint index, float x)
     {
+        if (_vertexAttrib1f == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib1f");
+        }
+
         _vertexAttrib1f(index, x);
     }
 
-    public void VertexAttrib1fv(uint index, float* v)
+    public static void VertexAttrib1fv(uint index, float* v)
     {
+        if (_vertexAttrib1fv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib1fv");
+        }
+
         _vertexAttrib1fv(index, v);
     }
 
-    public void VertexAttrib2f(uint index, float x, float y)
+    public static void VertexAttrib2f(uint index, float x, float y)
     {
+        if (_vertexAttrib2f == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib2f");
+        }
+
         _vertexAttrib2f(index, x, y);
     }
 
-    public void VertexAttrib2fv(uint index, float* v)
+    public static void VertexAttrib2fv(uint index, float* v)
     {
+        if (_vertexAttrib2fv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib2fv");
+        }
+
         _vertexAttrib2fv(index, v);
     }
 
-    public void VertexAttrib3f(uint index, float x, float y, float z)
+    public static void VertexAttrib3f(uint index, float x, float y, float z)
     {
+        if (_vertexAttrib3f == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib3f");
+        }
+
         _vertexAttrib3f(index, x, y, z);
     }
 
-    public void VertexAttrib3fv(uint index, float* v)
+    public static void VertexAttrib3fv(uint index, float* v)
     {
+        if (_vertexAttrib3fv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib3fv");
+        }
+
         _vertexAttrib3fv(index, v);
     }
 
-    public void VertexAttrib4f(uint index, float x, float y, float z, float w)
+    public static void VertexAttrib4f(uint index, float x, float y, float z, float w)
     {
+        if (_vertexAttrib4f == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib4f");
+        }
+
         _vertexAttrib4f(index, x, y, z, w);
     }
 
-    public void VertexAttrib4fv(uint index, float* v)
+    public static void VertexAttrib4fv(uint index, float* v)
     {
+        if (_vertexAttrib4fv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttrib4fv");
+        }
+
         _vertexAttrib4fv(index, v);
     }
 
-    public void VertexAttribDivisor(uint index, uint divisor)
+    public static void VertexAttribDivisor(uint index, uint divisor)
     {
+        if (_vertexAttribDivisor == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribDivisor");
+        }
+
         _vertexAttribDivisor(index, divisor);
     }
 
-    public void VertexAttribI4i(uint index, int x, int y, int z, int w)
+    public static void VertexAttribI4i(uint index, int x, int y, int z, int w)
     {
+        if (_vertexAttribI4i == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribI4i");
+        }
+
         _vertexAttribI4i(index, x, y, z, w);
     }
 
-    public void VertexAttribI4iv(uint index, int* v)
+    public static void VertexAttribI4iv(uint index, int* v)
     {
+        if (_vertexAttribI4iv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribI4iv");
+        }
+
         _vertexAttribI4iv(index, v);
     }
 
-    public void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w)
+    public static void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w)
     {
+        if (_vertexAttribI4ui == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribI4ui");
+        }
+
         _vertexAttribI4ui(index, x, y, z, w);
     }
 
-    public void VertexAttribI4uiv(uint index, uint* v)
+    public static void VertexAttribI4uiv(uint index, uint* v)
     {
+        if (_vertexAttribI4uiv == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribI4uiv");
+        }
+
         _vertexAttribI4uiv(index, v);
     }
 
-    public void VertexAttribIPointer(uint index, int size, uint type, int stride, void* pointer)
+    public static void VertexAttribIPointer(uint index, int size, uint type, int stride, void* pointer)
     {
+        if (_vertexAttribIPointer == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribIPointer");
+        }
+
         _vertexAttribIPointer(index, size, type, stride, pointer);
     }
 
-    public void VertexAttribPointer(uint index, int size, uint type, byte normalized, int stride, void* pointer)
+    public static void VertexAttribPointer(uint index, int size, uint type, byte normalized, int stride, void* pointer)
     {
+        if (_vertexAttribPointer == null)
+        {
+            throw FunctionNotLoaded("glVertexAttribPointer");
+        }
+
         _vertexAttribPointer(index, size, type, normalized, stride, pointer);
     }
 
-    public void Viewport(int x, int y, int width, int height)
+    public static void Viewport(int x, int y, int width, int height)
     {
+        if (_viewport == null)
+        {
+            throw FunctionNotLoaded("glViewport");
+        }
+
         _viewport(x, y, width, height);
     }
 
-    public void WaitSync(nint sync, uint flags, ulong timeout)
+    public static void WaitSync(nint sync, uint flags, ulong timeout)
     {
+        if (_waitSync == null)
+        {
+            throw FunctionNotLoaded("glWaitSync");
+        }
+
         _waitSync(sync, flags, timeout);
     }
 

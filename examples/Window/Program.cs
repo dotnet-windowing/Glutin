@@ -30,7 +30,6 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
     private Config? _config;
     private Surface<WindowSurface>? _surface;
     private PossiblyCurrentContext? _context;
-    private GL? _gl;
     private float _phase;
 
     public void CanCreateSurfaces(IActiveEventLoop eventLoop)
@@ -85,7 +84,7 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
             .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
             .MakeCurrent(_surface);
 #endif
-        _gl = GL.Load(_display.GetProcAddress);
+        GL.Load(_display.GetProcAddress);
         TryEnableVsync();
 
         Render();
@@ -168,7 +167,7 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
 
     private void Render()
     {
-        if (_window is null || _context is null || _surface is null || _gl is null)
+        if (_window is null || _context is null || _surface is null)
         {
             return;
         }
@@ -186,9 +185,9 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         float green = 0.18f + MathF.Sin(_phase + 2.1f) * 0.08f;
         float blue = 0.28f + MathF.Sin(_phase + 4.2f) * 0.08f;
 
-        _gl.Viewport(0, 0, checked((int)size.Width), checked((int)size.Height));
-        _gl.ClearColor(red, green, blue, 1.0f);
-        _gl.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+        GL.Viewport(0, 0, checked((int)size.Width), checked((int)size.Height));
+        GL.ClearColor(red, green, blue, 1.0f);
+        GL.Clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
         _window.PrePresentNotify();
         _surface.SwapBuffers(_context);
@@ -203,6 +202,5 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         _display?.Dispose();
         _display = null;
         _config = null;
-        _gl = null;
     }
 }

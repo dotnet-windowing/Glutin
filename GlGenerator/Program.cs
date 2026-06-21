@@ -480,7 +480,7 @@ internal static class CSharpGenerator
         builder.AppendLine();
         builder.AppendLine($"namespace {options.Namespace};");
         builder.AppendLine();
-        builder.AppendLine($"public unsafe sealed class {options.ClassName}");
+        builder.AppendLine($"public static unsafe class {options.ClassName}");
         builder.AppendLine("{");
         WriteEnums(builder, registry);
         WriteFields(builder, registry);
@@ -512,7 +512,7 @@ internal static class CSharpGenerator
         {
             string fieldName = FunctionPointerFieldName(command.Name);
             string functionPointerType = FunctionPointerType(command);
-            builder.AppendLine($"    private readonly {functionPointerType} {fieldName};");
+            builder.AppendLine($"    private static {functionPointerType} {fieldName};");
         }
 
         if (registry.Commands.Count > 0)
@@ -523,14 +523,8 @@ internal static class CSharpGenerator
 
     private static void WriteLoader(StringBuilder builder, Registry registry, Options options)
     {
-        builder.AppendLine($"    public static {options.ClassName} Load(Func<string, nint> load)");
+        builder.AppendLine("    public static void Load(Func<string, nint> load)");
         builder.AppendLine("    {");
-        builder.AppendLine($"        return new {options.ClassName}(load);");
-        builder.AppendLine("    }");
-        builder.AppendLine();
-        builder.AppendLine($"    private {options.ClassName}(Func<string, nint> load)");
-        builder.AppendLine("    {");
-
         foreach (Command command in registry.Commands.Values)
         {
             string fieldName = FunctionPointerFieldName(command.Name);
@@ -549,6 +543,11 @@ internal static class CSharpGenerator
         builder.AppendLine("        }");
         builder.AppendLine();
         builder.AppendLine("        return address;");
+        builder.AppendLine("    }");
+        builder.AppendLine();
+        builder.AppendLine("    private static InvalidOperationException FunctionNotLoaded(string name)");
+        builder.AppendLine("    {");
+        builder.AppendLine($"        return new InvalidOperationException($\"OpenGL function '{{name}}' has not been loaded. Call {options.ClassName}.Load first.\");");
         builder.AppendLine("    }");
     }
 
@@ -569,8 +568,13 @@ internal static class CSharpGenerator
             string parameters = string.Join(", ", command.Parameters.Select(ParameterDeclaration));
             string arguments = string.Join(", ", command.Parameters.Select(parameter => Identifier(parameter.Name, IdentifierContext.Parameter)));
 
-            builder.AppendLine($"    public {returnType} {methodName}({parameters})");
+            builder.AppendLine($"    public static {returnType} {methodName}({parameters})");
             builder.AppendLine("    {");
+            builder.AppendLine($"        if ({fieldName} == null)");
+            builder.AppendLine("        {");
+            builder.AppendLine($"            throw FunctionNotLoaded(\"{command.Name}\");");
+            builder.AppendLine("        }");
+            builder.AppendLine();
 
             if (returnType == "void")
             {
