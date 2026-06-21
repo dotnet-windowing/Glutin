@@ -11,6 +11,11 @@ internal sealed unsafe class WglExtensions
     internal readonly delegate* unmanaged<nint, int*, float*, uint, int*, uint*, int> ChoosePixelFormatARB;
     internal readonly delegate* unmanaged<nint, int, int, uint, int*, int*, int> GetPixelFormatAttribivARB;
     internal readonly delegate* unmanaged<nint, nint, int*, nint> CreateContextAttribsARB;
+    internal readonly delegate* unmanaged<nint, int, int, int, int*, nint> CreatePbufferARB;
+    internal readonly delegate* unmanaged<nint, nint> GetPbufferDCARB;
+    internal readonly delegate* unmanaged<nint, nint, int> ReleasePbufferDCARB;
+    internal readonly delegate* unmanaged<nint, int> DestroyPbufferARB;
+    internal readonly delegate* unmanaged<nint, int, int*, int> QueryPbufferARB;
     internal readonly delegate* unmanaged<int, int> SwapIntervalEXT;
 
     private WglExtensions(
@@ -19,6 +24,11 @@ internal sealed unsafe class WglExtensions
         nint choosePixelFormatArb,
         nint getPixelFormatAttribivArb,
         nint createContextAttribsArb,
+        nint createPbufferArb,
+        nint getPbufferDcArb,
+        nint releasePbufferDcArb,
+        nint destroyPbufferArb,
+        nint queryPbufferArb,
         nint swapIntervalExt)
     {
         GetExtensionsStringARB = (delegate* unmanaged<nint, sbyte*>)getExtensionsStringArb;
@@ -26,6 +36,11 @@ internal sealed unsafe class WglExtensions
         ChoosePixelFormatARB = (delegate* unmanaged<nint, int*, float*, uint, int*, uint*, int>)choosePixelFormatArb;
         GetPixelFormatAttribivARB = (delegate* unmanaged<nint, int, int, uint, int*, int*, int>)getPixelFormatAttribivArb;
         CreateContextAttribsARB = (delegate* unmanaged<nint, nint, int*, nint>)createContextAttribsArb;
+        CreatePbufferARB = (delegate* unmanaged<nint, int, int, int, int*, nint>)createPbufferArb;
+        GetPbufferDCARB = (delegate* unmanaged<nint, nint>)getPbufferDcArb;
+        ReleasePbufferDCARB = (delegate* unmanaged<nint, nint, int>)releasePbufferDcArb;
+        DestroyPbufferARB = (delegate* unmanaged<nint, int>)destroyPbufferArb;
+        QueryPbufferARB = (delegate* unmanaged<nint, int, int*, int>)queryPbufferArb;
         SwapIntervalEXT = (delegate* unmanaged<int, int>)swapIntervalExt;
     }
 
@@ -34,6 +49,13 @@ internal sealed unsafe class WglExtensions
     internal bool HasGetPixelFormatAttribivARB => GetPixelFormatAttribivARB is not null;
 
     internal bool HasCreateContextAttribsARB => CreateContextAttribsARB is not null;
+
+    internal bool HasPbufferARB =>
+        CreatePbufferARB is not null
+        && GetPbufferDCARB is not null
+        && ReleasePbufferDCARB is not null
+        && DestroyPbufferARB is not null
+        && QueryPbufferARB is not null;
 
     internal bool HasSwapIntervalEXT => SwapIntervalEXT is not null;
 
@@ -45,6 +67,11 @@ internal sealed unsafe class WglExtensions
             LoadProc("wglChoosePixelFormatARB"),
             LoadProc("wglGetPixelFormatAttribivARB"),
             LoadProc("wglCreateContextAttribsARB"),
+            LoadProc("wglCreatePbufferARB"),
+            LoadProc("wglGetPbufferDCARB"),
+            LoadProc("wglReleasePbufferDCARB"),
+            LoadProc("wglDestroyPbufferARB"),
+            LoadProc("wglQueryPbufferARB"),
             LoadProc("wglSwapIntervalEXT"));
     }
 

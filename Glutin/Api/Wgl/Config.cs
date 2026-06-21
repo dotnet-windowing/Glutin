@@ -164,8 +164,8 @@ public sealed unsafe class Config : IPlatformGlConfig
         && _display.Features.HasFlag(DisplayFeatures.SrgbFramebuffers)
         && RawAttribute(WglConstants.FramebufferSrgbCapableArb) != 0;
 
-    public bool? SupportsTransparency => _descriptor is null
-        ? RawAttribute(WglConstants.TransparentArb) != 0
+    public bool? SupportsTransparency => _descriptor is null && RawAttribute(WglConstants.TransparentArb) == 1
+        ? true
         : null;
 
     public bool HardwareAccelerated => _descriptor is { } descriptor
@@ -207,7 +207,9 @@ public sealed unsafe class Config : IPlatformGlConfig
         }
     }
 
-    public Api Api => Api.OpenGl;
+    public Api Api => _display.Features.HasFlag(DisplayFeatures.CreateEsContext)
+        ? Api.OpenGl | Api.Gles1 | Api.Gles2
+        : Api.OpenGl;
 
     public GlutinDisplay Display => _display.Facade;
 

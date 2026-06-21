@@ -22,6 +22,9 @@ internal static class WglConstants
     internal const int DrawToPbufferArb = 0x202D;
     internal const int MaxPbufferWidthArb = 0x202F;
     internal const int MaxPbufferHeightArb = 0x2030;
+    internal const int PbufferLargestArb = 0x2033;
+    internal const int PbufferWidthArb = 0x2034;
+    internal const int PbufferHeightArb = 0x2035;
     internal const int SampleBuffersArb = 0x2041;
     internal const int SamplesArb = 0x2042;
     internal const int FramebufferSrgbCapableArb = 0x20A9;

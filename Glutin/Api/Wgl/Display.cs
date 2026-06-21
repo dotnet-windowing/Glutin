@@ -110,7 +110,12 @@ public sealed unsafe class Display : IPlatformGlDisplay
         GlutinConfig config,
         SurfaceAttributes<PbufferSurface> surfaceAttributes)
     {
-        throw new GlutinException("pbuffers are not implemented with WGL yet");
+        if (config.Backend is not Config wglConfig)
+        {
+            throw new GlutinException("WGL display received a config from another backend.");
+        }
+
+        return new GlutinSurfacePbuffer(Surface<PbufferSurface>.CreatePbuffer(this, wglConfig, surfaceAttributes));
     }
 
     public GlutinSurfacePixmap CreatePixmapSurface(
