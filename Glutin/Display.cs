@@ -70,6 +70,14 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
             return global::Glutin.Backend.Wgl.Display.New(display, wglThenEgl.WindowHandle);
         }
 #endif
+#if !WINDOWS
+        if (preference.TryGetValue(out DisplayApiPreference.Glx _)
+            || preference.TryGetValue(out DisplayApiPreference.GlxThenEgl _)
+            || preference.TryGetValue(out DisplayApiPreference.EglThenGlx _))
+        {
+            return global::Glutin.Backend.Glx.Display.New(display);
+        }
+#endif
 
         throw new GlutinException(
             $"No OpenGL display backend is implemented yet for {preference.ApiName}.");

@@ -1,4 +1,3 @@
-#if WINDOWS
 using Glutin;
 using Glutin.OpenGL;
 using Glutin.Winit;
@@ -6,13 +5,21 @@ using RawWindowHandles;
 using Winit;
 using Winit.Core;
 using Winit.Dpi;
+#if !WINDOWS
+using Glutin.Platform.X11;
+using Winit.Platform.X11;
+#endif
 
 internal static class Program
 {
     [STAThread]
     private static void Main()
     {
+#if WINDOWS
         EventLoop.New().RunApp(new OpenGlWindowApp());
+#else
+        EventLoop.Builder().WithX11().Build().RunApp(new OpenGlWindowApp());
+#endif
     }
 }
 
@@ -33,14 +40,8 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
             return;
         }
 
-        _window = eventLoop.CreateWindow(new WindowAttributes
-        {
-            Title = "Glutin WGL Example",
-            SurfaceSize = new LogicalSize<double>(900.0, 600.0),
-            Position = new LogicalPosition<double>(120.0, 120.0),
-            Visible = true,
-        });
-
+#if WINDOWS
+        _window = eventLoop.CreateWindow(CreateWindowAttributes("Glutin WGL Example"));
         WindowSurfaceTarget target = _window.BuildSurfaceTarget();
         RawDisplayHandle displayHandle = target.DisplayHandle ?? RawDisplayHandle.FromWindows();
 
@@ -58,10 +59,48 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         _context = _display
             .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
             .MakeCurrent(_surface);
+#else
+        RawDisplayHandle displayHandle = eventLoop.GetGlDisplayHandle()
+            ?? throw new GlutinException("The Winit event loop does not expose a raw display handle.");
+
+        _display = Display.New(displayHandle, DisplayApiPreference.UseGlx());
+
+        ConfigTemplate template = ConfigTemplateBuilder
+            .New()
+            .Build();
+
+        _config = _display.FindConfigs(template).FirstOrDefault()
+            ?? throw new GlutinException("GLX did not return a matching FBConfig.");
+
+        uint visualId = _config.GetX11VisualId()
+            ?? throw new GlutinException("GLX config does not expose an X11 visual id.");
+
+        _window = eventLoop.CreateWindow(
+            CreateWindowAttributes("Glutin GLX Example")
+                .WithX11Visual(new Winit.X11.XVisualId(visualId)));
+
+        WindowSurfaceTarget target = _window.BuildSurfaceTarget();
+        _surface = _display.CreateWindowSurface(_config, target.Attributes);
+        _context = _display
+            .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
+            .MakeCurrent(_surface);
+#endif
         _gl = GL.Load(_display.GetProcAddress);
+        TryEnableVsync();
 
         Render();
         _window.RequestRedraw();
+    }
+
+    private static WindowAttributes CreateWindowAttributes(string title)
+    {
+        return new WindowAttributes
+        {
+            Title = title,
+            SurfaceSize = new LogicalSize<double>(900.0, 600.0),
+            Position = new LogicalPosition<double>(120.0, 120.0),
+            Visible = true,
+        };
     }
 
     public void WindowEvent(IActiveEventLoop eventLoop, WindowId windowId, WindowEvent windowEvent)
@@ -110,6 +149,23 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         DisposeGl();
     }
 
+    private void TryEnableVsync()
+    {
+        if (_surface is null || _context is null)
+        {
+            return;
+        }
+
+        try
+        {
+            _surface.SetSwapInterval(_context, SwapInterval.Wait(1));
+        }
+        catch (GlutinException)
+        {
+            // Some GLX/WGL stacks do not expose swap control.
+        }
+    }
+
     private void Render()
     {
         if (_window is null || _context is null || _surface is null || _gl is null)
@@ -150,6 +206,3 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         _gl = null;
     }
 }
-#else
-Console.WriteLine("The WGL example is only available on Windows.");
-#endif
