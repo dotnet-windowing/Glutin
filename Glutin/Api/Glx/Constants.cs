@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 namespace Glutin.Backend.Glx;
 
 internal static class GlxConstants

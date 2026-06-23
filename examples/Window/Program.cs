@@ -1,25 +1,23 @@
 using Glutin;
 using Glutin.OpenGL;
+using Glutin.Platform.X11;
 using Glutin.Winit;
 using RawWindowHandles;
 using Winit;
 using Winit.Core;
 using Winit.Dpi;
-#if !WINDOWS
-using Glutin.Platform.X11;
 using Winit.Platform.X11;
-#endif
 
 internal static class Program
 {
     [STAThread]
     private static void Main()
     {
-#if WINDOWS
-        EventLoop.New().RunApp(new OpenGlWindowApp());
-#else
-        EventLoop.Builder().WithX11().Build().RunApp(new OpenGlWindowApp());
-#endif
+        EventLoop eventLoop = OperatingSystem.IsWindows()
+            ? EventLoop.New()
+            : EventLoop.Builder().WithX11().Build();
+
+        eventLoop.RunApp(new OpenGlWindowApp());
     }
 }
 
@@ -39,7 +37,27 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
             return;
         }
 
-#if WINDOWS
+        if (OperatingSystem.IsWindows())
+        {
+            CreateWglSurface(eventLoop);
+        }
+        else
+        {
+            CreateGlxSurface(eventLoop);
+        }
+
+        Display display = _display ?? throw new GlutinException("OpenGL display was not created.");
+        IWindow window = _window ?? throw new GlutinException("Winit window was not created.");
+
+        GL.Load(display.GetProcAddress);
+        TryEnableVsync();
+
+        Render();
+        window.RequestRedraw();
+    }
+
+    private void CreateWglSurface(IActiveEventLoop eventLoop)
+    {
         _window = eventLoop.CreateWindow(CreateWindowAttributes("Glutin WGL Example"));
         WindowSurfaceTarget target = _window.BuildSurfaceTarget();
         RawDisplayHandle displayHandle = target.DisplayHandle ?? RawDisplayHandle.FromWindows();
@@ -58,7 +76,10 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         _context = _display
             .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
             .MakeCurrent(_surface);
-#else
+    }
+
+    private void CreateGlxSurface(IActiveEventLoop eventLoop)
+    {
         RawDisplayHandle displayHandle = eventLoop.GetGlDisplayHandle()
             ?? throw new GlutinException("The Winit event loop does not expose a raw display handle.");
 
@@ -83,12 +104,6 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
         _context = _display
             .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
             .MakeCurrent(_surface);
-#endif
-        GL.Load(_display.GetProcAddress);
-        TryEnableVsync();
-
-        Render();
-        _window.RequestRedraw();
     }
 
     private static WindowAttributes CreateWindowAttributes(string title)

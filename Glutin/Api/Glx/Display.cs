@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 using System.Runtime.InteropServices;
 using System.Text;
 using RawWindowHandles;

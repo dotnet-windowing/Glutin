@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 

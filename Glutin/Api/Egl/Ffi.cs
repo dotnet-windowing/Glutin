@@ -6,15 +6,15 @@ namespace Glutin.Backend.Egl;
 
 internal static unsafe partial class Ffi
 {
-#if WINDOWS
-    private const string LibEgl = "libEGL.dll";
-#elif ANDROID
-    private const string LibEgl = "libEGL.so";
-    private const string LibWaylandEgl = "libwayland-egl.so";
-#else
-    private const string LibEgl = "libEGL.so.1";
-    private const string LibWaylandEgl = "libwayland-egl.so.1";
+    private const string LibEgl = "glutin-egl";
+#if !ANDROID
+    private const string LibWaylandEgl = "glutin-wayland-egl";
 #endif
+
+    static Ffi()
+    {
+        NativeLibraryResolver.EnsureRegistered();
+    }
 
     [DllImport(LibEgl, EntryPoint = "eglGetError")]
     internal static extern int eglGetError();
@@ -93,7 +93,7 @@ internal static unsafe partial class Ffi
     [DllImport(LibEgl, EntryPoint = "eglGetProcAddress")]
     internal static extern nint eglGetProcAddress(byte* procName);
 
-#if !WINDOWS
+#if !ANDROID
     [DllImport(LibWaylandEgl, EntryPoint = "wl_egl_window_create")]
     internal static extern nint wl_egl_window_create(nint surface, int width, int height);
 

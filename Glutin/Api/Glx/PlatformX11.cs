@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 namespace Glutin.Platform.X11;
 
 public static class GlxConfigExtX11

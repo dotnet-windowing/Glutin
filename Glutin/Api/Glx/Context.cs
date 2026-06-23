@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 using GlutinConfig = Glutin.Config;
 using GlutinDisplay = Glutin.Display;
 using GlutinNotCurrentContext = Glutin.NotCurrentContext;

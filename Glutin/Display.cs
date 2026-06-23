@@ -64,14 +64,16 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
             return global::Glutin.Backend.Egl.Display.New(display);
         }
 
-#if WINDOWS
+#if !ANDROID
         if (preference.TryGetValue(out DisplayApiPreference.Wgl wgl))
         {
+            EnsureWindows(preference.ApiName);
             return global::Glutin.Backend.Wgl.Display.New(display, wgl.WindowHandle);
         }
 
         if (preference.TryGetValue(out DisplayApiPreference.EglThenWgl eglThenWgl))
         {
+            EnsureWindows(preference.ApiName);
             try
             {
                 return global::Glutin.Backend.Egl.Display.New(display);
@@ -84,6 +86,7 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
 
         if (preference.TryGetValue(out DisplayApiPreference.WglThenEgl wglThenEgl))
         {
+            EnsureWindows(preference.ApiName);
             try
             {
                 return global::Glutin.Backend.Wgl.Display.New(display, wglThenEgl.WindowHandle);
@@ -93,15 +96,16 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
                 return global::Glutin.Backend.Egl.Display.New(display);
             }
         }
-#endif
-#if !WINDOWS
+
         if (preference.TryGetValue(out DisplayApiPreference.Glx _))
         {
+            EnsureLinux(preference.ApiName);
             return global::Glutin.Backend.Glx.Display.New(display);
         }
 
         if (preference.TryGetValue(out DisplayApiPreference.EglThenGlx _))
         {
+            EnsureLinux(preference.ApiName);
             try
             {
                 return global::Glutin.Backend.Egl.Display.New(display);
@@ -114,6 +118,7 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
 
         if (preference.TryGetValue(out DisplayApiPreference.GlxThenEgl _))
         {
+            EnsureLinux(preference.ApiName);
             try
             {
                 return global::Glutin.Backend.Glx.Display.New(display);
@@ -128,6 +133,24 @@ public sealed class Display : IGlDisplay, IGetDisplayExtensions, IAsRawDisplay, 
         throw new GlutinException(
             $"No OpenGL display backend is implemented yet for {preference.ApiName}.");
     }
+
+#if !ANDROID
+    private static void EnsureWindows(string apiName)
+    {
+        if (!OperatingSystem.IsWindows())
+        {
+            throw new GlutinException($"{apiName} requires Windows.");
+        }
+    }
+
+    private static void EnsureLinux(string apiName)
+    {
+        if (!OperatingSystem.IsLinux())
+        {
+            throw new GlutinException($"{apiName} requires Linux.");
+        }
+    }
+#endif
 
     public IEnumerable<Config> FindConfigs(ConfigTemplate template)
     {

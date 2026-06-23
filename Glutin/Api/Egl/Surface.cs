@@ -400,9 +400,14 @@ internal sealed class NativeWindow : IDisposable
                 throw new GlutinException("provided Wayland native surface is null");
             }
 
-#if WINDOWS
-            throw new GlutinException("Wayland EGL windows are not supported on Windows.");
+#if ANDROID
+            throw new GlutinException("Wayland EGL windows are not supported on Android.");
 #else
+            if (OperatingSystem.IsWindows())
+            {
+                throw new GlutinException("Wayland EGL windows are not supported on Windows.");
+            }
+
             nint eglWindow = Ffi.wl_egl_window_create(wayland.Surface, checked((int)width), checked((int)height));
             if (eglWindow == 0)
             {
@@ -428,9 +433,14 @@ internal sealed class NativeWindow : IDisposable
 
     internal void Resize(uint width, uint height)
     {
-#if !WINDOWS
+#if !ANDROID
         if (Kind == NativeWindowKind.Wayland && NativeHandle != 0)
         {
+            if (OperatingSystem.IsWindows())
+            {
+                return;
+            }
+
             Ffi.wl_egl_window_resize(NativeHandle, checked((int)width), checked((int)height), 0, 0);
         }
 #endif
@@ -445,9 +455,14 @@ internal sealed class NativeWindow : IDisposable
 
         _disposed = true;
 
-#if !WINDOWS
+#if !ANDROID
         if (Kind == NativeWindowKind.Wayland && NativeHandle != 0 && OwnsPlatformWindow)
         {
+            if (OperatingSystem.IsWindows())
+            {
+                return;
+            }
+
             Ffi.wl_egl_window_destroy(NativeHandle);
         }
 #endif

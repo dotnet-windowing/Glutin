@@ -1,4 +1,4 @@
-#if !WINDOWS
+#if !ANDROID
 using RawWindowHandles;
 using GlutinConfig = Glutin.Config;
 using GlutinDisplay = Glutin.Display;
