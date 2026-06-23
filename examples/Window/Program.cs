@@ -1,8 +1,6 @@
 using Glutin;
 using Glutin.OpenGL;
-using Glutin.Platform.X11;
 using Glutin.Winit;
-using RawWindowHandles;
 using Winit;
 using Winit.Core;
 using Winit.Dpi;
@@ -37,73 +35,29 @@ internal sealed unsafe class OpenGlWindowApp : IApplicationHandler
             return;
         }
 
-        if (OperatingSystem.IsWindows())
-        {
-            CreateWglSurface(eventLoop);
-        }
-        else
-        {
-            CreateGlxSurface(eventLoop);
-        }
+        (IWindow? createdWindow, Config config) = DisplayBuilder
+            .New()
+            .WithWindowAttributes(CreateWindowAttributes("Glutin OpenGL Example"))
+            .Build(eventLoop, ConfigTemplateBuilder.New());
 
-        Display display = _display ?? throw new GlutinException("OpenGL display was not created.");
-        IWindow window = _window ?? throw new GlutinException("Winit window was not created.");
+        IWindow window = createdWindow ?? throw new GlutinException("DisplayBuilder did not create a Winit window.");
+        Display display = config.Display;
+
+        _window = window;
+        _config = config;
+        _display = display;
+
+        WindowSurfaceTarget target = window.BuildSurfaceTarget();
+        _surface = display.CreateWindowSurface(config, target.Attributes);
+        _context = display
+            .CreateContext(config, ContextAttributesBuilder.New().Build(target.WindowHandle))
+            .MakeCurrent(_surface);
 
         GL.Load(display.GetProcAddress);
         TryEnableVsync();
 
         Render();
         window.RequestRedraw();
-    }
-
-    private void CreateWglSurface(IActiveEventLoop eventLoop)
-    {
-        _window = eventLoop.CreateWindow(CreateWindowAttributes("Glutin WGL Example"));
-        WindowSurfaceTarget target = _window.BuildSurfaceTarget();
-        RawDisplayHandle displayHandle = target.DisplayHandle ?? RawDisplayHandle.FromWindows();
-
-        _display = Display.New(displayHandle, DisplayApiPreference.UseWgl(target.WindowHandle));
-
-        ConfigTemplate template = ConfigTemplateBuilder
-            .New()
-            .CompatibleWithNativeWindow(target.WindowHandle)
-            .Build();
-
-        _config = _display.FindConfigs(template).FirstOrDefault()
-            ?? throw new GlutinException("WGL did not return a matching pixel format.");
-
-        _surface = _display.CreateWindowSurface(_config, target.Attributes);
-        _context = _display
-            .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
-            .MakeCurrent(_surface);
-    }
-
-    private void CreateGlxSurface(IActiveEventLoop eventLoop)
-    {
-        RawDisplayHandle displayHandle = eventLoop.GetGlDisplayHandle()
-            ?? throw new GlutinException("The Winit event loop does not expose a raw display handle.");
-
-        _display = Display.New(displayHandle, DisplayApiPreference.UseGlx());
-
-        ConfigTemplate template = ConfigTemplateBuilder
-            .New()
-            .Build();
-
-        _config = _display.FindConfigs(template).FirstOrDefault()
-            ?? throw new GlutinException("GLX did not return a matching FBConfig.");
-
-        uint visualId = _config.GetX11VisualId()
-            ?? throw new GlutinException("GLX config does not expose an X11 visual id.");
-
-        _window = eventLoop.CreateWindow(
-            CreateWindowAttributes("Glutin GLX Example")
-                .WithX11Visual(new Winit.X11.XVisualId(visualId)));
-
-        WindowSurfaceTarget target = _window.BuildSurfaceTarget();
-        _surface = _display.CreateWindowSurface(_config, target.Attributes);
-        _context = _display
-            .CreateContext(_config, ContextAttributesBuilder.New().Build(target.WindowHandle))
-            .MakeCurrent(_surface);
     }
 
     private static WindowAttributes CreateWindowAttributes(string title)
